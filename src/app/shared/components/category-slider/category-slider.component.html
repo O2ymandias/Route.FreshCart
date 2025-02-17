@@ -1,0 +1,30 @@
+<div class="card">
+  <p-carousel
+    [value]="categories()"
+    [numVisible]="3"
+    [numScroll]="1"
+    [circular]="true"
+    [autoplayInterval]="5000"
+    [draggable]="true"
+    [responsiveOptions]="responsiveOptions"
+  >
+    <ng-template let-category #item>
+      <div
+        class="border-surface-200 dark:border-surface-700 m-2 rounded border p-4"
+      >
+        <div class="mb-4">
+          <div class="relative mx-auto">
+            <img
+              [src]="category.image"
+              [alt]="category.name"
+              class="rounded-border h-[250px] w-full"
+            />
+          </div>
+        </div>
+        <div class="mb-4 font-medium dark:text-white">
+          {{ category.name }}
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

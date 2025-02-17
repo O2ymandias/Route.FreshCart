@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .main-btn {
+    @apply rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800;
+  }
+}
+
+@layer utilities {
+  .font-montserrat {
+    font-family: "Montserrat", serif;
+  }
+  .active-link {
+    @apply text-green-700 !important;
+  }
+}
