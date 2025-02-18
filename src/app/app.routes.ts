@@ -58,12 +58,19 @@ export const routes: Routes = [
     canActivate: [mainGuard],
   },
   {
-    path: 'checkout',
+    path: 'checkout/:cartId',
     loadComponent: () =>
       import('./pages/checkout/checkout.component').then(
         (c) => c.CheckoutComponent,
       ),
     title: 'checkout',
+    canActivate: [mainGuard],
+  },
+  {
+    path: 'allorders',
+    loadComponent: () =>
+      import('./pages/orders/orders.component').then((c) => c.OrdersComponent),
+    title: 'orders',
     canActivate: [mainGuard],
   },
 

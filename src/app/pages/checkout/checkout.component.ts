@@ -1,11 +1,118 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { CartService } from '../../core/services/cart.service';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
+import { isPlatformBrowser } from '@angular/common';
+import { IUserData } from '../../shared/interfaces/iuser-data';
+import { Subscription } from 'rxjs';
+import { OrdersService } from '../../core/services/orders.service';
 
 @Component({
   selector: 'app-checkout',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.scss'
+  styleUrl: './checkout.component.scss',
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit, OnDestroy {
+  // Services
+  private readonly _formBuilder: FormBuilder = inject(FormBuilder);
+  private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private readonly _router: Router = inject(Router);
+  private readonly _authService: AuthService = inject(AuthService);
+  private readonly _platformId: object = inject(PLATFORM_ID);
+  private readonly _ordersService: OrdersService = inject(OrdersService);
 
+  // Properties
+  cartId: string | null = null;
+  userId: string | null = null;
+  checkoutForm!: FormGroup;
+
+  // Subscriptions
+  payWithCreditSubscription: Subscription | null = null;
+  payWithCashSubscription: Subscription | null = null;
+
+  // Hooks
+  ngOnInit(): void {
+    this._initCheckoutForm();
+    this._initCartId();
+    this._initUserId();
+  }
+  ngOnDestroy(): void {
+    this.payWithCreditSubscription?.unsubscribe();
+    this.payWithCashSubscription?.unsubscribe();
+  }
+
+  // Methods
+  payWithCredit(): void {
+    if (this.checkoutForm.valid) {
+      if (this.cartId !== null) {
+        this._ordersService
+          .payWithCredit(this.cartId, this.checkoutForm.value)
+          .subscribe({
+            next: (response) => {
+              if (response.status === 'success')
+                window.open(response.session.url, '_self');
+            },
+          });
+      }
+    } else {
+      this.checkoutForm.markAllAsTouched();
+    }
+  }
+
+  payWithCash(): void {
+    if (this.checkoutForm.valid) {
+      if (this.cartId !== null) {
+        this._ordersService
+          .payWithCash(this.cartId, this.checkoutForm.value)
+          .subscribe({
+            next: (response) => {
+              if (response.status === 'success')
+                this._router.navigate(['/orders', this.userId]);
+            },
+            error: (error) => {
+              console.log(error);
+            },
+          });
+      }
+    } else {
+      this.checkoutForm.markAllAsTouched();
+    }
+  }
+
+  private _initCheckoutForm() {
+    this.checkoutForm = this._formBuilder.group({
+      details: [null],
+      phone: [
+        null,
+        [Validators.required, Validators.pattern(/^01[0125]\d{8}$/)],
+      ],
+      city: [null, [Validators.required]],
+    });
+  }
+  private _initCartId() {
+    this._activatedRoute.paramMap.subscribe({
+      next: (params) => (this.cartId = params.get('cartId')),
+    });
+  }
+  private _initUserId() {
+    if (isPlatformBrowser(this._platformId)) {
+      const token = localStorage.getItem('userToken')!;
+      const userData: IUserData | null = this._authService.decodeToken(token);
+      if (userData) this.userId = userData.id;
+    }
+  }
 }

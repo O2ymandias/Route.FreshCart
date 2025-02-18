@@ -1,15 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
 import { Subscription } from 'rxjs';
 import { IProduct } from '../../shared/interfaces/iproduct';
 import { GalleriaModule } from 'primeng/galleria';
 import { ButtonModule } from 'primeng/button';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, GalleriaModule, ButtonModule],
+  imports: [GalleriaModule, ButtonModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })
@@ -17,11 +18,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
   // Services
   private readonly _productService: ProductsService = inject(ProductsService);
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private readonly _cartService: CartService = inject(CartService);
   private readonly _router: Router = inject(Router);
 
   // Subscriptions
   private _getProductByIdSubscription: Subscription | null = null;
   private _getRouteParamSubscription: Subscription | null = null;
+  private _addProductToCartSubscription: Subscription | null = null;
 
   // Properties
   productDetails: IProduct | null = null;
@@ -58,6 +61,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._getRouteParamSubscription?.unsubscribe();
     this._getProductByIdSubscription?.unsubscribe();
+    this._addProductToCartSubscription?.unsubscribe();
   }
 
   private _getSpecificProduct(id: string) {
@@ -71,5 +75,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
         }
       },
     });
+  }
+
+  addProductToCart(productId: string | undefined): void {
+    if (productId === undefined) return;
+    this._cartService.addProductToCart(productId).subscribe();
   }
 }

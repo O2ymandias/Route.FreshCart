@@ -1,1 +1,129 @@
-<p>checkout works!</p>
+@let phoneControl = checkoutForm.get("phone");
+@let cityControl = checkoutForm.get("city");
+
+<section class="my-10">
+  <form
+    [formGroup]="checkoutForm"
+    class="mx-auto max-w-screen-sm rounded-lg border p-5 shadow dark:border-slate-600"
+  >
+    <!-- Phone -->
+    <div class="mb-5">
+      <label
+        for="phone"
+        class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+        >Phone</label
+      >
+      <input
+        formControlName="phone"
+        type="tel"
+        id="phone"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-green-500 dark:focus:ring-green-500"
+      />
+
+      <!--* Validation Message -->
+      @if (phoneControl?.touched && phoneControl?.errors) {
+        <div
+          class="flex items-center py-2 text-sm text-red-800 dark:text-red-400"
+          role="alert"
+        >
+          <svg
+            class="me-3 inline h-4 w-4 shrink-0"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+            />
+          </svg>
+          <span class="sr-only">Info</span>
+
+          @if (phoneControl?.hasError("required")) {
+            <p>Please enter your phone number.</p>
+          } @else if (phoneControl?.hasError("pattern")) {
+            <p>
+              Please enter a valid Egyptian phone number (e.g., 01012345678,
+              01112345678, 01212345678, or 01512345678).
+            </p>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- City -->
+    <div class="mb-5">
+      <label
+        for="city"
+        class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+        >City</label
+      >
+      <input
+        formControlName="city"
+        type="text"
+        id="city"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-green-500 dark:focus:ring-green-500"
+      />
+
+      <!--* Validation Message -->
+      @if (cityControl?.touched && cityControl?.errors) {
+        <div
+          class="flex items-center py-2 text-sm text-red-800 dark:text-red-400"
+          role="alert"
+        >
+          <svg
+            class="me-3 inline h-4 w-4 shrink-0"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+            />
+          </svg>
+          <span class="sr-only">Info</span>
+
+          <p>Please enter your city.</p>
+        </div>
+      }
+    </div>
+
+    <!-- Details -->
+    <div class="mb-5">
+      <label
+        for="details"
+        class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+        >Details</label
+      >
+      <textarea
+        formControlName="details"
+        id="details"
+        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-green-500 dark:focus:ring-green-500"
+      >
+      </textarea>
+    </div>
+
+    <div class="flex items-center">
+      <!-- Cash -->
+      <button
+        (click)="payWithCash()"
+        type="button"
+        class="mb-2 me-2 inline-flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-800"
+      >
+        <span>Cash</span>
+        <i class="fa-solid fa-sack-dollar ms-2 text-green-700"></i>
+      </button>
+
+      <!-- Credit -->
+      <button
+        (click)="payWithCredit()"
+        type="button"
+        class="mb-2 me-2 inline-flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-800"
+      >
+        <span>Credit</span>
+        <i class="fa-regular fa-credit-card ms-2 text-sky-700"></i>
+      </button>
+    </div>
+  </form>
+</section>

@@ -26,13 +26,9 @@ export class ProductCardComponent implements OnInit {
 
   addToCart(productId: string): void {
     this._cartService.addProductToCart(productId).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
+      next: (response) => {},
 
-      error: (httpErrorResponse: HttpErrorResponse) => {
-        console.log(httpErrorResponse.error);
-      },
+      error: (httpErrorResponse: HttpErrorResponse) => {},
     });
   }
 }
