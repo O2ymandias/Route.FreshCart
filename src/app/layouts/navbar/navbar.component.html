@@ -13,9 +13,17 @@
     <div class="flex items-center space-x-3 md:order-2 rtl:space-x-reverse">
       @if (isLoggedIn) {
         <a
+          routerLink="/wishlist"
+          routerLinkActive="active-link"
+          class="group flex size-10 items-center justify-center rounded-full text-sm text-slate-500 dark:text-slate-400 dark:hover:bg-slate-700 md:me-0"
+        >
+          <i class="fa-solid fa-lg fa-heart"></i>
+        </a>
+
+        <a
           routerLink="/cart"
           routerLinkActive="active-link"
-          class="flex size-10 items-center justify-center rounded-full text-sm text-slate-500 hover:bg-slate-100 focus:ring-2 focus:ring-slate-400 dark:text-slate-400 dark:hover:bg-slate-700 dark:focus:ring-slate-600 md:me-0"
+          class="flex size-10 items-center justify-center rounded-full text-sm text-slate-500 dark:text-slate-400 dark:hover:bg-slate-700 md:me-0"
         >
           <i class="fa-solid fa-lg fa-cart-shopping"></i>
         </a>
@@ -32,7 +40,7 @@
         <span class="sr-only">Open user menu</span>
         <div class="flex h-10 w-10 items-center justify-center rounded-full">
           <i
-            class="fa-regular fa-user fa-xl text-slate-500 dark:text-slate-400"
+            class="fa-solid fa-user fa-lg text-slate-500 dark:text-slate-400"
           ></i>
         </div>
       </button>

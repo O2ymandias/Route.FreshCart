@@ -73,6 +73,15 @@ export const routes: Routes = [
     title: 'orders',
     canActivate: [mainGuard],
   },
+  {
+    path: 'wishlist',
+    loadComponent: () =>
+      import('./pages/wishlist/wishlist.component').then(
+        (c) => c.WishlistComponent,
+      ),
+    title: 'wishlist',
+    canActivate: [mainGuard],
+  },
 
   // Auth Routes
   {

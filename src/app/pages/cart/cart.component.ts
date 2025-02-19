@@ -1,3 +1,4 @@
+import { WishlistService } from './../../core/services/wishlist.service';
 import {
   Component,
   ElementRef,
@@ -22,10 +23,10 @@ export class CartComponent implements OnInit {
   // Services
   private readonly _cartService: CartService = inject(CartService);
   private readonly _renderer2: Renderer2 = inject(Renderer2);
+  private readonly _wishlistService: WishlistService = inject(WishlistService);
 
   // Properties
   cartData: ICartData | null = null;
-
   @ViewChildren('updateQuantityBtn')
   updateQuantityBtns: QueryList<ElementRef<HTMLButtonElement>> | null = null;
 
@@ -34,37 +35,35 @@ export class CartComponent implements OnInit {
     this._getCartData();
   }
 
+  // Methods
   removeCartItem(itemId: string) {
     this._cartService.removeItem(itemId).subscribe((response) => {
-      this.cartData = {
-        cartId: response.cartId,
-        products: response.data.products,
-        totalCartPrice: response.data.totalCartPrice,
-      };
+      this._setCartData(response);
     });
   }
-
   updateQuantity(productId: string, newQuantity: number) {
     this._disableUpdateBtns();
     this._cartService
       .updateProductQuantity(productId, newQuantity.toString())
       .subscribe((response) => {
         this._enableUpdateBtns();
-        this.updateQuantityBtns?.forEach((btnRef) => {
-          this._renderer2.removeAttribute(btnRef.nativeElement, 'disabled');
-        });
-        this.cartData = {
-          cartId: response.cartId,
-          products: response.data.products,
-          totalCartPrice: response.data.totalCartPrice,
-        };
+        this._setCartData(response);
       });
   }
-
   clearCart(): void {
     this._cartService.clearUserCart().subscribe({
       next: (response) => {
-        if (response.message === 'success') this._getCartData();
+        if (response.message === 'success') this.cartData = null;
+      },
+    });
+  }
+  addToWishList(productId: string): void {
+    this._wishlistService.addProductToWishlist(productId).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.log(error);
       },
     });
   }
@@ -87,5 +86,12 @@ export class CartComponent implements OnInit {
     this.updateQuantityBtns?.forEach((btnRef) => {
       this._renderer2.removeAttribute(btnRef.nativeElement, 'disabled');
     });
+  }
+  private _setCartData(response: any): void {
+    this.cartData = {
+      cartId: response.cartId,
+      products: response.data.products,
+      totalCartPrice: response.data.totalCartPrice,
+    };
   }
 }

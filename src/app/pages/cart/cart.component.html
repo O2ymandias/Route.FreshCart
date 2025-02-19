@@ -111,6 +111,7 @@
 
                   <div class="flex items-center gap-4">
                     <button
+                      (click)="addToWishList(item.product.id)"
                       type="button"
                       class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
                     >
@@ -170,7 +171,7 @@
               <button
                 (click)="clearCart()"
                 type="button"
-                class="mt-4 inline-flex items-center font-medium text-red-600 dark:text-red-500"
+                class="group mt-4 inline-flex items-center font-medium text-red-600 dark:text-red-500"
               >
                 <svg
                   class="me-1.5 h-5 w-5"
@@ -190,6 +191,9 @@
                   />
                 </svg>
                 <span>Remove All </span>
+                <i
+                  class="fa-solid fa-spinner fa-spin invisible ms-2 group-focus:visible"
+                ></i>
               </button>
             </div>
           </div>
