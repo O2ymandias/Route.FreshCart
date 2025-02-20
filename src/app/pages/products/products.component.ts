@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ICategory } from '../../shared/interfaces/icategory';
+import { CategoriesService } from '../../core/services/categories.service';
 
 @Component({
   selector: 'app-products',
@@ -22,6 +24,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // Services
   private readonly _productsServices: ProductsService = inject(ProductsService);
   private readonly _platformId: object = inject(PLATFORM_ID);
+  private readonly _categoryService: CategoriesService =
+    inject(CategoriesService);
 
   constructor() {
     if (
@@ -35,16 +39,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // Properties
   allProducts: IProduct[] = [];
   paginatedProducts: IProduct[] = [];
-  filteredProducts: IProduct[] = [];
+  searchedProducts: IProduct[] = [];
   pageIndex: number = 1;
   pageSize: number = 10;
-  searchValue: string = '';
+  searchValue: string | null = null;
+
+  filteredProducts: IProduct[] = [];
+  filteredCategoryValue: string = '';
+  allCategories: ICategory[] = [];
 
   // Subscriptions
   getAllProductsSubscription: Subscription | null = null;
 
   ngOnInit(): void {
     this._initAllProducts();
+    this._initCategories();
   }
 
   private _initAllProducts(): void {
@@ -62,8 +71,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     localStorage.setItem('pageIndex', this.pageIndex.toString());
   }
 
-  filterProducts(searchValue: string): void {
-    this.filteredProducts = this.allProducts.filter((p) => {
+  searchProducts(searchValue: string | null): void {
+    if (!searchValue) return;
+    this.searchedProducts = this.allProducts.filter((p) => {
       const normalizedSearchValue = searchValue.toLowerCase();
       const normalizedTitle = p.title.toLowerCase();
       const normalizedDescription = p.description.toLowerCase();
@@ -86,6 +96,22 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const end = start + this.pageSize;
 
     this.paginatedProducts = this.allProducts.slice(start, end);
+  }
+
+  filterByCategory(categoryName: string | null): void {
+    if (!categoryName) return;
+
+    this.filteredProducts = this.allProducts.filter((p) => {
+      const normalizedProductCategoryName = p.category.name.toLowerCase();
+      const normalizedCategoryName = categoryName.toLowerCase();
+      return normalizedProductCategoryName === normalizedCategoryName;
+    });
+  }
+
+  private _initCategories(): void {
+    this._categoryService
+      .getAllCategories()
+      .subscribe((response) => (this.allCategories = response.data));
   }
 
   ngOnDestroy(): void {

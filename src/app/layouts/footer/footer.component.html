@@ -1,17 +1,13 @@
-<footer class="bg-slate-200 p-4 dark:bg-gray-800 sm:p-6">
+<footer class="bg-slate-200 p-4 shadow-inner dark:bg-gray-800 sm:p-6">
   <div class="mx-auto max-w-screen-xl">
     <div class="md:flex md:justify-between">
       <div class="mb-6 md:mb-0">
-        <a href="https://flowbite.com" class="flex items-center">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            class="mr-3 h-8"
-            alt="FlowBite Logo"
-          />
-          <span
-            class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
-            >Flowbite</span
-          >
+        <a
+          routerLink="/home"
+          class="flex items-center space-x-3 text-2xl rtl:space-x-reverse"
+        >
+          <i class="fa-solid fa-cart-shopping text-green-700"></i>
+          <span class="font-extrabold dark:text-slate-300">FreshCart</span>
         </a>
 
         <div class="my-5">
@@ -60,13 +56,20 @@
             Resources
           </h2>
           <ul class="text-gray-600 dark:text-gray-400">
-            <li class="mb-4">
-              <a href="https://flowbite.com" class="hover:underline"
-                >Flowbite</a
+            <li class="my-4">
+              <a
+                target="_blank"
+                href="https://angular.dev/"
+                class="hover:underline"
+                >Angular</a
               >
             </li>
-            <li>
-              <a href="https://tailwindcss.com/" class="hover:underline"
+
+            <li class="my-4">
+              <a
+                target="_blank"
+                href="https://tailwindcss.com/"
+                class="hover:underline"
                 >Tailwind CSS</a
               >
             </li>
@@ -79,16 +82,20 @@
             Follow us
           </h2>
           <ul class="text-gray-600 dark:text-gray-400">
-            <li class="mb-4">
+            <li class="my-4">
               <a
-                href="https://github.com/themesberg/flowbite"
+                target="_blank"
+                href="https://github.com/O2ymandias"
                 class="hover:underline"
                 >Github</a
               >
             </li>
-            <li>
-              <a href="https://discord.gg/4eeurUVvTy" class="hover:underline"
-                >Discord</a
+            <li class="my-4">
+              <a
+                target="_blank"
+                href="https://x.com/MaxDmyan"
+                class="hover:underline"
+                >X</a
               >
             </li>
           </ul>
@@ -101,27 +108,28 @@
           </h2>
           <ul class="text-gray-600 dark:text-gray-400">
             <li class="mb-4">
-              <a href="#" class="hover:underline">Privacy Policy</a>
+              <a class="cursor-pointer hover:underline">Privacy Policy</a>
             </li>
             <li>
-              <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+              <a class="cursor-pointer hover:underline"
+                >Terms &amp; Conditions</a
+              >
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <hr class="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
+    <hr
+      class="my-6 border-slate-300 dark:border-slate-600 sm:mx-auto lg:my-8"
+    />
     <div class="sm:flex sm:items-center sm:justify-between">
       <span class="text-sm text-gray-500 dark:text-gray-400 sm:text-center"
-        >© 2022
-        <a href="https://flowbite.com" class="hover:underline">Flowbite™</a>.
-        All Rights Reserved.
+        >© {{ currentDate }}
+        <a routerLink="/home" class="hover:underline">FreshCart™</a>. All
+        Rights Reserved.
       </span>
       <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-        <a
-          href="#"
-          class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-        >
+        <a class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
           <svg
             class="h-5 w-5"
             fill="currentColor"
@@ -135,10 +143,7 @@
             />
           </svg>
         </a>
-        <a
-          href="#"
-          class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-        >
+        <a class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
           <svg
             class="h-5 w-5"
             fill="currentColor"
@@ -152,10 +157,7 @@
             />
           </svg>
         </a>
-        <a
-          href="#"
-          class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-        >
+        <a class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
           <svg
             class="h-5 w-5"
             fill="currentColor"
@@ -167,10 +169,7 @@
             />
           </svg>
         </a>
-        <a
-          href="#"
-          class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-        >
+        <a class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
           <svg
             class="h-5 w-5"
             fill="currentColor"
@@ -184,10 +183,7 @@
             />
           </svg>
         </a>
-        <a
-          href="#"
-          class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-        >
+        <a class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
           <svg
             class="h-5 w-5"
             fill="currentColor"
