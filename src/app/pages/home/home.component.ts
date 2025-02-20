@@ -7,8 +7,6 @@ import { CategoriesService } from '../../core/services/categories.service';
 import { Subscription } from 'rxjs';
 import { CategorySliderComponent } from '../../shared/components/category-slider/category-slider.component';
 import { GalleriaModule } from 'primeng/galleria';
-import { CartService } from '../../core/services/cart.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -44,10 +42,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._getProducts();
     this._getCategories();
   }
-  ngOnDestroy(): void {
-    this._getProductsSubscription?.unsubscribe();
-    this._getCategoriesSubscription?.unsubscribe();
-  }
 
   // Methods
   private _getProducts(): void {
@@ -67,5 +61,10 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.categories = response.data;
         },
       });
+  }
+
+  ngOnDestroy(): void {
+    this._getProductsSubscription?.unsubscribe();
+    this._getCategoriesSubscription?.unsubscribe();
   }
 }

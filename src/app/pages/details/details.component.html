@@ -12,7 +12,7 @@
         (click)="displayBasic = true"
         class="mx-auto my-2 block w-fit rounded-lg bg-gradient-to-br from-green-400 to-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-bl focus:outline-none dark:focus:ring-green-800"
       >
-        Images <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
+        Preview More <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
       </button>
 
       <p-galleria
@@ -32,85 +32,71 @@
       </p-galleria>
     </div>
 
-    <div class="col-span-12 sm:col-span-8">
+    <div
+      class="sm-pt-0 col-span-12 space-y-4 border-t-2 border-slate-100 pt-4 dark:border-slate-600 sm:col-span-8 sm:border-s-2 sm:border-t-0 sm:ps-10"
+    >
       <h5
-        class="my-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
       >
         {{ productDetails?.title }}
       </h5>
-      <p class="my-4 text-gray-500 dark:text-gray-400">
+      <p class="text-gray-500 dark:text-gray-400">
         {{ productDetails?.description }}
       </p>
 
       <!-- Labels -->
       <div
-        class="my-4 w-fit rounded-sm bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+        class="w-fit rounded-sm bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
       >
         {{ productDetails?.category?.name }}
       </div>
       <div
-        class="my-4 w-fit rounded-sm bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:bg-rose-900 dark:text-rose-300"
+        class="w-fit rounded-sm bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:bg-rose-900 dark:text-rose-300"
       >
         {{ productDetails?.brand?.name }}
       </div>
 
+      <!-- Add To Favorites -->
+      <button
+        (click)="addProductToWishlist()"
+        type="button"
+        class="inline-flex items-center font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
+      >
+        <svg
+          class="me-1 h-5 w-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+          />
+        </svg>
+        Add to wishlist
+      </button>
+
       <!-- Rating -->
-      <div class="my-4 flex items-center">
-        <svg
-          class="me-1 h-4 w-4 text-yellow-300"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="me-1 h-4 w-4 text-yellow-300"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="me-1 h-4 w-4 text-yellow-300"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="me-1 h-4 w-4 text-yellow-300"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
-        <svg
-          class="me-1 h-4 w-4 text-gray-300 dark:text-gray-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path
-            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
-          />
-        </svg>
+      <div class="flex items-center">
+        @for (star of stars; track $index) {
+          <svg
+            class="me-1 h-4 w-4 text-yellow-300"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 22 20"
+          >
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+            />
+          </svg>
+        }
         <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
           {{ productDetails?.ratingsAverage }}
         </p>
@@ -123,12 +109,10 @@
       </div>
 
       <!-- Price -->
-      <div class="my-4 text-3xl font-bold text-gray-900 dark:text-white">
+      <div class="text-3xl font-bold text-gray-900 dark:text-white">
         {{ productDetails?.price }} LE
       </div>
-      <button (click)="addProductToCart(productDetails?.id)" class="main-btn">
-        Add to cart
-      </button>
+      <button (click)="addProductToCart()" class="main-btn">Add to cart</button>
     </div>
   </div>
 </section>

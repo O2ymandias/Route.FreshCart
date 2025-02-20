@@ -32,7 +32,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Nora,
         options: {
-          darkModeSelector: '',
+          darkModeSelector: '.dark',
         },
       },
     }),

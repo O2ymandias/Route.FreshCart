@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { IProduct } from '../../shared/interfaces/iproduct';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, RouterLink],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.scss',
 })

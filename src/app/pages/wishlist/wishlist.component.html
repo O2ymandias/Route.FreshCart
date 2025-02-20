@@ -1,24 +1,39 @@
 <section class="my-10">
-  <h2 class="text-center text-3xl font-bold dark:text-white">
-    Your wishlist
-    <i class="fa-regular fa-heart ms-1.5"></i>
-  </h2>
-  <p class="my-4 text-lg dark:text-white">
-    <span class="font-bold"> {{ count }} </span> Items were added to your
-    wishlist.
-  </p>
+  @if (products.length > 0) {
+    <h1 class="text-xl font-bold dark:text-white">
+      Your wishlist
+      <i class="fa-regular fa-heart ms-1.5"></i>
+    </h1>
+    <p class="my-4 text-lg dark:text-white">
+      <span class="font-bold"> {{ count }} </span> Items were added to your
+      wishlist.
+    </p>
 
-  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    @for (product of products; track product.id) {
-      <app-product-card
-        (updatedproductsEmitter)="updateProducts($event)"
-        [imagePath]="product.imageCover"
-        [price]="product.price"
-        [rating]="product.ratingsAverage"
-        [title]="product.title"
-        [id]="product.id"
-        [removeProduct]="true"
-      ></app-product-card>
-    }
-  </div>
+    <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      @for (product of products; track product.id) {
+        <app-product-card
+          (updatedproductsEmitter)="updateProducts($event)"
+          [imagePath]="product.imageCover"
+          [price]="product.price"
+          [rating]="product.ratingsAverage"
+          [title]="product.title"
+          [id]="product.id"
+          [removeProduct]="true"
+        ></app-product-card>
+      }
+    </div>
+  } @else {
+    <div class="my-5 text-center">
+      <i class="fa-solid fa-heart-crack fa-3x dark:text-slate-300"></i>
+      <h1 class="my-4 text-xl font-medium dark:text-white">
+        Your wishlist is empty
+      </h1>
+      <p class="my-4 text-gray-500 dark:text-gray-400">
+        Add products to wishlist while you shop.
+      </p>
+      <a routerLink="/home" class="main-btn mx-auto block w-fit">
+        Start Shopping <i class="fa fa-arrow-right"></i>
+      </a>
+    </div>
+  }
 </section>
