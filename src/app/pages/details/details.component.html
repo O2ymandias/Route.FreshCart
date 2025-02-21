@@ -46,7 +46,7 @@
 
       <!-- Labels -->
       <div
-        class="w-fit rounded-sm bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+        class="w-fit rounded-sm bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
       >
         {{ productDetails?.category?.name }}
       </div>
@@ -54,6 +54,24 @@
         class="w-fit rounded-sm bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:bg-rose-900 dark:text-rose-300"
       >
         {{ productDetails?.brand?.name }}
+      </div>
+      <div>
+        @if (productDetails && productDetails.quantity >= 100) {
+          <span
+            class="me-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+            >Available</span
+          >
+        } @else if (productDetails && productDetails.quantity < 100) {
+          <span
+            class="me-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+            >Limited</span
+          >
+        } @else {
+          <span
+            class="me-2 rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300"
+            >Not available</span
+          >
+        }
       </div>
 
       <!-- Add To Favorites -->

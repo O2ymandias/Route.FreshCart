@@ -1,17 +1,15 @@
 import {
-  AfterViewInit,
   Component,
   inject,
-  Input,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { IUserData } from '../../shared/interfaces/iuser-data';
 import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { FlowbiteService } from '../../core/services/flowbite.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit, OnDestroy {
   public readonly _authService: AuthService = inject(AuthService);
   public readonly _platformId: object = inject(PLATFORM_ID);
+  private readonly _flowbiteService: FlowbiteService = inject(FlowbiteService);
 
   userName!: string;
   isLoggedIn!: boolean;
@@ -30,6 +29,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedInSubscription: Subscription | null = null;
 
   ngOnInit() {
+    // Init Flowbite
+    this._flowbiteService.loadFlowbite((flowbite) => {});
+
     if (isPlatformBrowser(this._platformId)) {
       this.isLoggedInSubscription = this._authService.isLoggedIn.subscribe(
         (value) => (this.isLoggedIn = value),

@@ -32,6 +32,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   id: InputSignal<string> = input.required();
   addToFavorites: InputSignal<boolean> = input(false);
   removeProduct: InputSignal<boolean> = input(false);
+  quantity: InputSignal<number> = input.required();
 
   // Other Properties
   updatedproductsEmitter: OutputEmitterRef<any> = output<any>();

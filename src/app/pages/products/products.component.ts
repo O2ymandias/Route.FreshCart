@@ -22,6 +22,7 @@ import { CategoriesService } from '../../core/services/categories.service';
 import { BrandsService } from '../../core/services/brands.service';
 import { IBrand } from '../../shared/interfaces/ibrand';
 import { IProductsFiltrationOptions } from '../../shared/interfaces/iproducts-filtration-options';
+import { FlowbiteService } from '../../core/services/flowbite.service';
 
 @Component({
   selector: 'app-products',
@@ -31,6 +32,7 @@ import { IProductsFiltrationOptions } from '../../shared/interfaces/iproducts-fi
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   // Services
+  private readonly _flowbiteService: FlowbiteService = inject(FlowbiteService);
   private readonly _productsServices: ProductsService = inject(ProductsService);
   private readonly _platformId: object = inject(PLATFORM_ID);
   private readonly _categoryService: CategoriesService =
@@ -62,6 +64,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getAllCategoriesSubscription: Subscription | null = null;
 
   ngOnInit(): void {
+    // Init Flowbite
+    this._flowbiteService.loadFlowbite((flowbite) => {});
+
     this._initFormFiltration();
     this._initProducts({
       pageNumber: this.pageIndex.toString(),
