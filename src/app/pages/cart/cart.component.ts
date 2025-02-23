@@ -70,11 +70,8 @@ export class CartComponent implements OnInit {
 
   private _getCartData(): void {
     this._cartService.getLoggedUserCart().subscribe((response) => {
-      this.cartData = {
-        cartId: response.cartId,
-        products: response.data.products,
-        totalCartPrice: response.data.totalCartPrice,
-      };
+      console.log(response);
+      this._setCartData(response);
     });
   }
   private _disableUpdateBtns(): void {
@@ -89,6 +86,7 @@ export class CartComponent implements OnInit {
   }
   private _setCartData(response: any): void {
     this.cartData = {
+      numOfCartItems: response.numOfCartItems,
       cartId: response.cartId,
       products: response.data.products,
       totalCartPrice: response.data.totalCartPrice,

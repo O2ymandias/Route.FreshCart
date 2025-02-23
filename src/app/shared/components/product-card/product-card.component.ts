@@ -60,8 +60,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       .addProductToCart(this.id())
       .subscribe({
         next: (response) => {
-          if (response.status === 'success')
+          if (response.status === 'success') {
             this._toastrService.success(response.message, 'FreshCart');
+          }
         },
 
         error: () => {

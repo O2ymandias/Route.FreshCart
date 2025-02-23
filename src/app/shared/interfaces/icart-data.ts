@@ -2,6 +2,7 @@ export interface ICartData {
   cartId: string;
   products: Product[];
   totalCartPrice: number;
+  numOfCartItems: number;
 }
 
 export interface Product {

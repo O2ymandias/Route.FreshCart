@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { IShippingAddress } from '../../shared/interfaces/ishipping-address';
 
 @Injectable({
   providedIn: 'root',
