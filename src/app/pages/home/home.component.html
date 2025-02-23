@@ -45,7 +45,7 @@
     <h2 class="my-5 text-2xl font-bold dark:text-white">Trending products</h2>
 
     <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      @for (product of products.slice(0, 10); track product.id) {
+      @for (product of products | slice: 0 : 10; track product.id) {
         <app-product-card
           [imagePath]="product.imageCover"
           [price]="product.price"
@@ -55,6 +55,29 @@
           [addToFavorites]="true"
           [quantity]="product.quantity"
         ></app-product-card>
+      }
+
+      @defer (on interaction) {
+        @for (product of products | slice: 10 : 20; track product.id) {
+          <app-product-card
+            [imagePath]="product.imageCover"
+            [price]="product.price"
+            [rating]="product.ratingsAverage"
+            [title]="product.title"
+            [id]="product.id"
+            [addToFavorites]="true"
+            [quantity]="product.quantity"
+          ></app-product-card>
+        }
+      } @placeholder {
+        <div class="col-span-full">
+          <button
+            type="button"
+            class="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+          >
+            Load more
+          </button>
+        </div>
       }
     </div>
   </section>

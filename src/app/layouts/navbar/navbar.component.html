@@ -17,17 +17,30 @@
         <a
           routerLink="/wishlist"
           routerLinkActive="active-link"
-          class="group flex size-10 items-center justify-center rounded-full text-sm text-slate-500 dark:text-slate-400 dark:hover:bg-slate-700 md:me-0"
+          class="relative flex size-10 items-center justify-center rounded-full text-sm text-slate-500 dark:text-slate-400 dark:hover:bg-slate-700 md:me-0"
         >
           <i class="fa-solid fa-lg fa-heart"></i>
+
+          @if (numberOfItemsInWishlist > 0) {
+            <span
+              class="absolute right-0 top-0 ms-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-medium text-blue-800"
+            >
+              {{ numberOfItemsInWishlist }}
+            </span>
+          }
         </a>
 
         <a
           routerLink="/cart"
           routerLinkActive="active-link"
-          class="flex size-10 items-center justify-center rounded-full text-sm text-slate-500 dark:text-slate-400 dark:hover:bg-slate-700 md:me-0"
+          class="relative flex size-10 items-center justify-center rounded-full text-sm text-slate-500 dark:text-slate-400 dark:hover:bg-slate-700 md:me-0"
         >
           <i class="fa-solid fa-lg fa-cart-shopping"></i>
+          <span
+            class="absolute right-0 top-0 ms-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800"
+          >
+            2
+          </span>
         </a>
       }
 

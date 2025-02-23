@@ -12,10 +12,13 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { Subscription } from 'rxjs';
+import { CurrencyPipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import { response } from 'express';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-card',
-  imports: [RouterLink],
+  imports: [RouterLink, TitleCasePipe, CurrencyPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
@@ -23,6 +26,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   // Services
   private readonly _cartService: CartService = inject(CartService);
   private readonly _wishlistService: WishlistService = inject(WishlistService);
+  private readonly _toastrService: ToastrService = inject(ToastrService);
 
   // Input Properties
   imagePath: InputSignal<string> = input.required();
@@ -54,13 +58,38 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   addToCart(): void {
     this.addToCartSubscription = this._cartService
       .addProductToCart(this.id())
-      .subscribe();
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success')
+            this._toastrService.success(response.message, 'FreshCart');
+        },
+
+        error: () => {
+          this._toastrService.error('Something went wrong', 'FreshCart');
+        },
+      });
   }
+
   addToWishlist(): void {
     this.addToWishlistSubscription = this._wishlistService
       .addProductToWishlist(this.id())
-      .subscribe();
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this._wishlistService.updateNumberOfItems();
+            this._toastrService.success(
+              'Product added to wishlist',
+              'FreshCart',
+            );
+          }
+        },
+
+        error: () => {
+          this._toastrService.error('Something went wrong', 'FreshCart');
+        },
+      });
   }
+
   removeFromWishlist(): void {
     this.isRemoving = true;
     this.removeToWishlistSubscription = this._wishlistService
@@ -72,6 +101,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
               .getLoggedUserWishlist()
               .subscribe({
                 next: (response) => {
+                  this._wishlistService.updateNumberOfItems();
                   this.isRemoving = false;
                   this.updatedproductsEmitter.emit(response);
                 },

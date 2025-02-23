@@ -5,8 +5,51 @@
     >
       All Products
     </h1>
+  </div>
 
-    <div class="flex items-center gap-x-2">
+  <div class="mx-auto my-5 w-[75%] space-y-4">
+    <!-- Search -->
+    <div>
+      <label
+        for="default-search"
+        class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Search</label
+      >
+      <div class="relative">
+        <div
+          class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3"
+        >
+          <svg
+            class="h-4 w-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <input
+          type="search"
+          [(ngModel)]="searchValue"
+          (input)="search(searchValue)"
+          id="default-search"
+          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-green-500 dark:focus:ring-green-500"
+          placeholder="Search by title, description..."
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Sort & Filter -->
+    <div class="flex items-center justify-center gap-x-2">
+      <!-- Sort -->
       <select
         [(ngModel)]="sortValue"
         (change)="sort(sortValue)"
@@ -31,7 +74,7 @@
   </div>
 
   <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    @for (product of allProducts; track product.id) {
+    @for (product of displayProducts; track product.id) {
       <app-product-card
         [imagePath]="product.imageCover"
         [price]="product.price"
@@ -44,6 +87,7 @@
     }
   </div>
 
+  <!-- Pagination -->
   <nav class="my-5 flex justify-center" aria-label="Page navigation">
     <ul class="inline-flex -space-x-px text-sm">
       <li>
@@ -144,6 +188,7 @@
             formControlName="category"
             class="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-sm text-slate-900 focus:border-green-500 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:focus:border-green-500 dark:focus:ring-green-500"
           >
+            <option selected [value]="''">Select Category</option>
             @for (category of allCategories; track category._id) {
               <option [value]="category._id">{{ category.name }}</option>
             }
@@ -160,6 +205,7 @@
             formControlName="brand"
             class="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-sm text-slate-900 focus:border-green-500 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:focus:border-green-500 dark:focus:ring-green-500"
           >
+            <option selected [value]="''">Select Brand</option>
             @for (brand of allBrands; track brand._id) {
               <option [value]="brand._id">{{ brand.name }}</option>
             }

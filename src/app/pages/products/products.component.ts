@@ -1,6 +1,5 @@
 import {
   Component,
-  HostListener,
   inject,
   OnDestroy,
   OnInit,
@@ -52,21 +51,26 @@ export class ProductsComponent implements OnInit, OnDestroy {
   pageIndex: number = 1;
   pageSize: number = 10;
 
+  displayProducts: IProduct[] = [];
   allProducts: IProduct[] = [];
   allCategories: ICategory[] = [];
   allBrands: IBrand[] = [];
   filtrationForm!: FormGroup;
   isFiltered: boolean = false;
   sortValue: string = '';
+  searchValue: string = '';
 
   // Subscriptions
+  getDisplayedProductsSubscription: Subscription | null = null;
   getAllProductsSubscription: Subscription | null = null;
   getAllCategoriesSubscription: Subscription | null = null;
+  getAllBrandsSubscription: Subscription | null = null;
 
   ngOnInit(): void {
     // Init Flowbite
     this._flowbiteService.loadFlowbite((flowbite) => {});
 
+    this._initAllProducts();
     this._initFormFiltration();
     this._initProducts({
       pageNumber: this.pageIndex.toString(),
@@ -105,19 +109,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   private _initProducts(options?: IProductsFiltrationOptions): void {
     this._updatePageIndexOnLocalStorage();
-    this.getAllProductsSubscription = this._productsServices
+    this.getDisplayedProductsSubscription = this._productsServices
       .getAllProducts(options)
       .subscribe({
         next: (response) => {
-          this.allProducts = response.data;
+          this.displayProducts = response.data;
         },
       });
   }
 
   private _initFormFiltration(): void {
     this.filtrationForm = this._formBuilder.group({
-      category: [null],
-      brand: [null],
+      category: [''],
+      brand: [''],
       minPrice: [100],
       maxPrice: [100000],
     });
@@ -134,9 +138,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   private _initBrands(): void {
-    this._brandsService
+    this.getAllBrandsSubscription = this._brandsService
       .getAllBrands()
       .subscribe((response) => (this.allBrands = response.data));
+  }
+
+  private _initAllProducts(): void {
+    this.getAllProductsSubscription = this._productsServices
+      .getAllProducts({
+        limit: '1000',
+      })
+      .subscribe((response) => (this.allProducts = response.data));
   }
 
   filter(): void {
@@ -184,8 +196,29 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   }
 
+  search(searchValue: string): void {
+    if (!searchValue) {
+      this._initProducts({
+        pageNumber: this.pageIndex.toString(),
+        limit: '10',
+      });
+      return;
+    }
+    const normalizedSearchValue = searchValue.toLowerCase();
+    this.displayProducts = this.allProducts.filter((product) => {
+      const normalizedProductName = product.title.toLowerCase();
+      const normalizedProductDescription = product.description.toLowerCase();
+      return (
+        normalizedProductName.includes(normalizedSearchValue) ||
+        normalizedProductDescription.includes(normalizedSearchValue)
+      );
+    });
+  }
+
   ngOnDestroy(): void {
+    this.getDisplayedProductsSubscription?.unsubscribe();
     this.getAllProductsSubscription?.unsubscribe();
     this.getAllCategoriesSubscription?.unsubscribe();
+    this.getAllBrandsSubscription?.unsubscribe();
   }
 }

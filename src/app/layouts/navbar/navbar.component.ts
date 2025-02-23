@@ -10,6 +10,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { CommonModule, isPlatformBrowser, NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { FlowbiteService } from '../../core/services/flowbite.service';
+import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,9 +22,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public readonly _authService: AuthService = inject(AuthService);
   public readonly _platformId: object = inject(PLATFORM_ID);
   private readonly _flowbiteService: FlowbiteService = inject(FlowbiteService);
+  private readonly _wishlistService: WishlistService = inject(WishlistService);
 
   userName!: string;
   isLoggedIn!: boolean;
+  numberOfItemsInWishlist!: number;
 
   userNameSubscription: Subscription | null = null;
   isLoggedInSubscription: Subscription | null = null;
@@ -40,6 +43,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         (value) => (this.userName = value),
       );
     }
+
+    this._wishlistService.numberOfItems.subscribe(
+      (res) => (this.numberOfItemsInWishlist = res),
+    );
   }
 
   ngOnDestroy(): void {

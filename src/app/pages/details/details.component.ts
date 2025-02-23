@@ -8,10 +8,12 @@ import { GalleriaModule } from 'primeng/galleria';
 import { ButtonModule } from 'primeng/button';
 import { CartService } from '../../core/services/cart.service';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { CurrencyPipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
-  imports: [GalleriaModule, ButtonModule],
+  imports: [GalleriaModule, ButtonModule, CurrencyPipe],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })
@@ -22,6 +24,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   private readonly _cartService: CartService = inject(CartService);
   private readonly _router: Router = inject(Router);
   private readonly _wishListService: WishlistService = inject(WishlistService);
+  private readonly _toastrService: ToastrService = inject(ToastrService);
 
   // Subscriptions
   private _getProductByIdSubscription: Subscription | null = null;
@@ -61,13 +64,32 @@ export class DetailsComponent implements OnInit, OnDestroy {
   // Methods
   addProductToCart(): void {
     if (this.productDetails === null) return;
-    this._cartService.addProductToCart(this.productDetails.id).subscribe();
+    this._cartService.addProductToCart(this.productDetails.id).subscribe({
+      next: (response) => {
+        if (response.status === 'success')
+          this._toastrService.success(response.message, 'FreshCart');
+      },
+
+      error: () => {
+        this._toastrService.error('Something went wrong', 'FreshCart');
+      },
+    });
   }
-  addProductToWishlist() {
+  addProductToWishlist(): void {
     if (this.productDetails === null) return;
     this._addProductToWishlistSubscription = this._wishListService
       .addProductToWishlist(this.productDetails.id)
-      .subscribe();
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this._wishListService.updateNumberOfItems();
+            this._toastrService.success(response.message, 'FreshCart');
+          }
+        },
+        error: () => {
+          this._toastrService.error('Something went wrong', 'FreshCart');
+        },
+      });
   }
 
   private _getSpecificProduct(id: string) {

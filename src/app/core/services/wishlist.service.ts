@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, OnInit, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -17,9 +17,13 @@ export class WishlistService {
       window.localStorage.getItem('userToken')
     ) {
       this.userToken = window.localStorage.getItem('userToken');
+
+      // Setting the number of items in the wishlist
+      this.updateNumberOfItems();
     }
   }
 
+  numberOfItems: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   userToken: string | null = null;
 
   addProductToWishlist(productId: string): Observable<any> {
@@ -52,6 +56,12 @@ export class WishlistService {
       headers: {
         token: this.userToken ?? '',
       },
+    });
+  }
+
+  updateNumberOfItems(): void {
+    this.getLoggedUserWishlist().subscribe((response) => {
+      this.numberOfItems.next(response.count);
     });
   }
 }

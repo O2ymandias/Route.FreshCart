@@ -15,6 +15,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Nora from '@primeng/themes/nora';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +30,9 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),
+    provideAnimations(),
+
+    // PrimeNG
     providePrimeNG({
       theme: {
         preset: Nora,
@@ -35,6 +40,12 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: '.dark',
         },
       },
+    }),
+
+    // Toastr
+    provideToastr({
+      positionClass: 'toast-bottom-right',
+      closeButton: true,
     }),
   ],
 };

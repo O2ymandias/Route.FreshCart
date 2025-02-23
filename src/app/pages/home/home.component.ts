@@ -1,16 +1,24 @@
+import { IProduct } from './../../shared/interfaces/iproduct';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
-import { IProduct } from '../../shared/interfaces/iproduct';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { ICategory } from '../../shared/interfaces/icategory';
 import { CategoriesService } from '../../core/services/categories.service';
 import { Subscription } from 'rxjs';
 import { CategorySliderComponent } from '../../shared/components/category-slider/category-slider.component';
 import { GalleriaModule } from 'primeng/galleria';
+import { SlicePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductCardComponent, CategorySliderComponent, GalleriaModule],
+  imports: [
+    ProductCardComponent,
+    CategorySliderComponent,
+    GalleriaModule,
+    SlicePipe,
+    FormsModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -37,6 +45,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   categories: ICategory[] = [];
 
+  searchValue: string = '';
+
   // Hooks
   ngOnInit(): void {
     this._getProducts();
@@ -49,7 +59,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAllProducts()
       .subscribe({
         next: (response) => {
-          this.products = response.data;
+          // Trending products
+          const sortedProducts: IProduct[] = response.data.sort(
+            (p1: IProduct, p2: IProduct) => p2.sold - p1.sold,
+          );
+          this.products = sortedProducts;
         },
       });
   }

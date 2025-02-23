@@ -128,7 +128,7 @@
 
       <!-- Price -->
       <div class="text-3xl font-bold text-gray-900 dark:text-white">
-        {{ productDetails?.price }} LE
+        {{ productDetails?.price | currency: "GBP" }}
       </div>
       <button (click)="addProductToCart()" class="main-btn">Add to cart</button>
     </div>
