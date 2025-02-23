@@ -13,50 +13,29 @@ export class WishlistService {
     @Inject(PLATFORM_ID) private readonly _platformId: object,
   ) {
     if (
-      isPlatformBrowser(this._platformId) &&
-      window.localStorage.getItem('userToken')
+      isPlatformBrowser(this._platformId) 
     ) {
-      this.userToken = window.localStorage.getItem('userToken');
-
       // Setting the number of items in the wishlist
       this.updateNumberOfItems();
     }
   }
 
   numberOfItems: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  userToken: string | null = null;
 
   addProductToWishlist(productId: string): Observable<any> {
-    return this._httpClient.post(
-      `${environment.baseUrl}/api/v1/wishlist`,
-      {
-        productId,
-      },
-      {
-        headers: {
-          token: this.userToken ?? '',
-        },
-      },
-    );
+    return this._httpClient.post(`${environment.baseUrl}/api/v1/wishlist`, {
+      productId,
+    });
   }
 
   removeProductFromWishlist(productId: string): Observable<any> {
     return this._httpClient.delete(
       `${environment.baseUrl}/api/v1/wishlist/${productId}`,
-      {
-        headers: {
-          token: this.userToken ?? '',
-        },
-      },
     );
   }
 
   getLoggedUserWishlist(): Observable<any> {
-    return this._httpClient.get(`${environment.baseUrl}/api/v1/wishlist`, {
-      headers: {
-        token: this.userToken ?? '',
-      },
-    });
+    return this._httpClient.get(`${environment.baseUrl}/api/v1/wishlist`);
   }
 
   updateNumberOfItems(): void {

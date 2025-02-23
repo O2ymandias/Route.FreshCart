@@ -81,7 +81,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           .subscribe({
             next: (response) => {
               if (response.status === 'success')
-                this._router.navigate(['/orders', this.userId]);
+                this._router.navigate(['/allorders']);
             },
             error: (error) => {
               console.log(error);

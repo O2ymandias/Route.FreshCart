@@ -9,15 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class OrdersService {
-  constructor(
-    private readonly _httpClient: HttpClient,
-    @Inject(PLATFORM_ID) private readonly _platformId: object,
-  ) {
-    if (isPlatformBrowser(this._platformId)) {
-      this.userToken = localStorage.getItem('userToken') ?? '';
-    }
-  }
-  private userToken: string = '';
+  constructor(private readonly _httpClient: HttpClient) {}
 
   payWithCredit(
     cartId: string,
@@ -27,11 +19,6 @@ export class OrdersService {
       `${environment.baseUrl}/api/v1/orders/checkout-session/${cartId}?url=http://localhost:4200`,
       {
         shippingAddress,
-      },
-      {
-        headers: {
-          token: this.userToken,
-        },
       },
     );
   }
@@ -44,11 +31,6 @@ export class OrdersService {
       `${environment.baseUrl}/api/v1/orders/${cartId}`,
       {
         shippingAddress,
-      },
-      {
-        headers: {
-          token: this.userToken,
-        },
       },
     );
   }
