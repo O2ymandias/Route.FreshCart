@@ -36,9 +36,7 @@
                 <div
                   class="flex items-center justify-between md:order-3 md:justify-end"
                 >
-                  <!-- Add,Remove Buttons & Quantity -->
                   <div class="flex items-center">
-                    <!-- Remove -->
                     <button
                       #updateQuantityBtn
                       (click)="updateQuantity(item.product.id, item.count - 1)"
@@ -62,14 +60,12 @@
                       </svg>
                     </button>
 
-                    <!-- Quantity -->
                     <span
                       class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                     >
                       {{ item.count }}
                     </span>
 
-                    <!-- Add -->
                     <button
                       #updateQuantityBtn
                       (click)="updateQuantity(item.product.id, item.count + 1)"
@@ -94,7 +90,6 @@
                     </button>
                   </div>
 
-                  <!-- Price -->
                   <div class="text-end md:order-4 md:w-32">
                     <p
                       class="text-base font-bold text-gray-900 dark:text-white"
@@ -142,9 +137,9 @@
                     </button>
 
                     <button
-                      (click)="removeCartItem(item.product.id)"
+                      (click)="removeCartItem($event, item.product.id)"
                       type="button"
-                      class="group inline-flex items-center text-sm font-medium text-red-600 dark:text-red-500"
+                      class="inline-flex items-center text-sm font-medium text-red-600 dark:text-red-500"
                     >
                       <svg
                         class="me-1.5 h-5 w-5"
@@ -164,9 +159,7 @@
                         />
                       </svg>
                       <span>Remove</span>
-                      <i
-                        class="fa-solid fa-spinner fa-spin invisible ms-2 group-focus:visible"
-                      ></i>
+                      <i class="fa-solid fa-spinner fa-spin ms-2 hidden"></i>
                     </button>
                   </div>
                 </div>
@@ -177,7 +170,7 @@
               <button
                 (click)="clearCart()"
                 type="button"
-                class="group mt-4 inline-flex items-center font-medium text-red-600 dark:text-red-500"
+                class="mt-4 inline-flex items-center font-medium text-red-600 dark:text-red-500"
               >
                 <svg
                   class="me-1.5 h-5 w-5"
@@ -197,9 +190,9 @@
                   />
                 </svg>
                 <span>Remove All </span>
-                <i
-                  class="fa-solid fa-spinner fa-spin invisible ms-2 group-focus:visible"
-                ></i>
+                @if (clearCartSpinner) {
+                  <i class="fa-solid fa-spinner fa-spin ms-2"></i>
+                }
               </button>
             </div>
           </div>
@@ -307,4 +300,7 @@
       </a>
     </div>
   }
+
+  <!-- Delete Confirmation -->
+  <p-confirmdialog />
 </section>

@@ -23,7 +23,7 @@
 
           @if (numberOfItemsInWishlist > 0) {
             <span
-              class="absolute right-0 top-0 ms-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-medium text-blue-800"
+              class="absolute right-0 top-0 ms-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-200 text-xs font-medium text-red-800"
             >
               {{ numberOfItemsInWishlist }}
             </span>
@@ -160,11 +160,11 @@
       </button>
     </div>
 
-    @if (isLoggedIn) {
-      <div
-        class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
-        id="navbar-user"
-      >
+    <div
+      class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+      id="navbar-user"
+    >
+      @if (isLoggedIn) {
         <ul
           class="mt-4 flex flex-col rounded-lg border border-slate-400/50 bg-slate-200 p-4 font-medium dark:border-gray-700 dark:bg-slate-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-slate-200 md:p-0 md:dark:bg-slate-800 rtl:space-x-reverse"
         >
@@ -201,7 +201,7 @@
             >
           </li>
         </ul>
-      </div>
-    }
+      }
+    </div>
   </div>
 </nav>

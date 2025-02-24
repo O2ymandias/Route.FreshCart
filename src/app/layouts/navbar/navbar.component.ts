@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public readonly _platformId: object = inject(PLATFORM_ID);
   private readonly _flowbiteService: FlowbiteService = inject(FlowbiteService);
   private readonly _wishlistService: WishlistService = inject(WishlistService);
-  private readonly _cartService: CartService = inject(CartService);
 
   userName!: string;
   isLoggedIn!: boolean;

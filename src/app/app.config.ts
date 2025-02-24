@@ -23,6 +23,8 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -46,6 +48,7 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    
 
     // Toastr
     provideToastr({

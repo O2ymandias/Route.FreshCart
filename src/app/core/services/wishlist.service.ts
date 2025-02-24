@@ -13,7 +13,8 @@ export class WishlistService {
     @Inject(PLATFORM_ID) private readonly _platformId: object,
   ) {
     if (
-      isPlatformBrowser(this._platformId) 
+      isPlatformBrowser(this._platformId) &&
+      localStorage.getItem('userToken')
     ) {
       // Setting the number of items in the wishlist
       this.updateNumberOfItems();
