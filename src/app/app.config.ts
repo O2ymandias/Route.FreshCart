@@ -24,6 +24,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { errorsInterceptor } from './core/interceptors/errors.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,7 +36,10 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
     ),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([headersInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([headersInterceptor, errorsInterceptor]),
+    ),
     provideAnimationsAsync(),
     provideAnimations(),
 
@@ -48,7 +52,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    
 
     // Toastr
     provideToastr({

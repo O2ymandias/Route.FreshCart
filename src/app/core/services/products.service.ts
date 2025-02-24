@@ -18,7 +18,11 @@ export class ProductsService {
       if (options.minPrice) url += `price[gte]=${options.minPrice}&`;
       if (options.maxPrice) url += `price[lte]=${options.maxPrice}&`;
       if (options.brandId) url += `brand=${options.brandId}&`;
-      if (options.categoryId) url += `category[in]=${options.categoryId}&`;
+      if (options.categoriesIds) {
+        for (let i = 0; i < options.categoriesIds.length; i++) {
+          url += `category[${i}]=${options.categoriesIds[i]}&`;
+        }
+      }
       if (options.sort) url += `sort=${options.sort}&`;
     }
     return this._httpClient.get(url);

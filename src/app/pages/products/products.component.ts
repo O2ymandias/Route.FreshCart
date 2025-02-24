@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { isPlatformBrowser } from '@angular/common';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -50,6 +51,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     ) {
       this.pageIndex = Number(localStorage.getItem('pageIndex'));
     }
+
+    this._initFormFiltration();
   }
 
   pageIndex: number = 1;
@@ -73,7 +76,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._initAllProducts();
-    this._initFormFiltration();
     this._initProducts({
       pageNumber: this.pageIndex.toString(),
       limit: this.pageSize.toString(),
@@ -94,7 +96,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this._initProducts({
         pageNumber: this.pageIndex.toString(),
         limit: this.pageSize.toString(),
-        categoryId: filterOptions.category,
+        categoriesIds: this._getCategoriesIds(),
         brandId: filterOptions.brand,
         minPrice: filterOptions.minPrice,
         maxPrice: filterOptions.maxPrice,
@@ -122,10 +124,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   private _initFormFiltration(): void {
     this.filtrationForm = this._formBuilder.group({
-      category: [''],
+      categories: this._formBuilder.array([]),
       brand: [''],
       minPrice: [100],
       maxPrice: [100000],
+    });
+  }
+
+  private _initFormFiltrationCheckboxes(): void {
+    this.allCategories.forEach((category) => {
+      const categories = this.filtrationForm.get('categories') as FormArray;
+      categories.push(this._formBuilder.control(false));
     });
   }
 
@@ -136,7 +145,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private _initCategories(): void {
     this.getAllCategoriesSubscription = this._categoryService
       .getAllCategories()
-      .subscribe((response) => (this.allCategories = response.data));
+      .subscribe((response) => {
+        this.allCategories = response.data;
+        this._initFormFiltrationCheckboxes();
+      });
   }
 
   private _initBrands(): void {
@@ -153,6 +165,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
       .subscribe((response) => (this.allProducts = response.data));
   }
 
+  private _getCategoriesIds(): string[] {
+    return this.filtrationForm.value.categories
+      .map((val: boolean, i: number) =>
+        val ? this.allCategories[i]._id : null,
+      )
+      .filter((val: string) => val !== null);
+  }
+
   filter(): void {
     this.isFiltered = true;
     this.pageIndex = 1;
@@ -160,7 +180,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._initProducts({
       pageNumber: this.pageIndex.toString(),
       limit: this.pageSize.toString(),
-      categoryId: filterOptions.category,
+      categoriesIds: this._getCategoriesIds(),
       brandId: filterOptions.brand,
       minPrice: filterOptions.minPrice,
       maxPrice: filterOptions.maxPrice,
@@ -183,7 +203,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this._initProducts({
         pageNumber: this.pageIndex.toString(),
         limit: this.pageSize.toString(),
-        categoryId: filterOptions.category,
+        categoriesIds: this._getCategoriesIds(),
         brandId: filterOptions.brand,
         minPrice: filterOptions.minPrice,
         maxPrice: filterOptions.maxPrice,

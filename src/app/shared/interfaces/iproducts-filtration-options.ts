@@ -5,5 +5,5 @@ export interface IProductsFiltrationOptions {
   minPrice?: string;
   maxPrice?: string;
   brandId?: string;
-  categoryId?: string;
+  categoriesIds?: string[];
 }
