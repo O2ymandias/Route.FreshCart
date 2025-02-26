@@ -12,8 +12,7 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { Subscription } from 'rxjs';
-import { CurrencyPipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { response } from 'express';
+import { CurrencyPipe, TitleCasePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -77,6 +76,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 'success') {
+            console.log(response);
             this._wishlistService.updateNumberOfItems();
             this._toastrService.success(
               'Product added to wishlist',

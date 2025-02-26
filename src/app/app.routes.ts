@@ -98,7 +98,10 @@ export const routes: Routes = [
   },
   {
     path: 'forgetPassword',
-    component: ForgetPasswordComponent,
+    loadComponent: () =>
+      import('./pages/forget-password/forget-password.component').then(
+        (c) => c.ForgetPasswordComponent,
+      ),
     title: 'forget password',
     canActivate: [authGuard],
   },

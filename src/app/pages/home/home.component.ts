@@ -9,6 +9,7 @@ import { CategorySliderComponent } from '../../shared/components/category-slider
 import { GalleriaModule } from 'primeng/galleria';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',

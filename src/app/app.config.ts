@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import {
   provideRouter,
   withHashLocation,
@@ -12,6 +16,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import {
+  HttpClient,
   provideHttpClient,
   withFetch,
   withInterceptors,
@@ -23,8 +28,11 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { errorsInterceptor } from './core/interceptors/errors.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { httpLoaderFactory } from './core/utilities/httpLoaderFactory';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,7 +46,11 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(
       withFetch(),
-      withInterceptors([headersInterceptor, errorsInterceptor]),
+      withInterceptors([
+        headersInterceptor,
+        errorsInterceptor,
+        loadingInterceptor,
+      ]),
     ),
     provideAnimationsAsync(),
     provideAnimations(),
@@ -57,6 +69,21 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-bottom-right',
       closeButton: true,
+    }),
+
+    // Spinner
+    importProvidersFrom([NgxSpinnerModule]),
+
+    // Translate
+    provideTranslateService({
+      // Global configuration for TranslateService
+      defaultLanguage: 'ar',
+
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
     }),
   ],
 };

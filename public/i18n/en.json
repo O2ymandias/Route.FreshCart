@@ -1,0 +1,21 @@
+{
+  "logo": "FreshCart",
+  "navbar": {
+    "home": "Home",
+    "products": "Products",
+    "brands": "Brands",
+    "categories": "Categories",
+
+    "userDropdown": {
+      "theme": "Theme",
+      "dark": "Dark",
+      "light": "Light",
+      "lang": "Language",
+      "ar": "Arabic",
+      "en": "English",
+      "signOut": "Sign out",
+      "login": "Login",
+      "register": "Register"
+    }
+  }
+}
