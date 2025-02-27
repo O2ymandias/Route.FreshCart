@@ -23,6 +23,7 @@ import { BrandsService } from '../../core/services/brands.service';
 import { IBrand } from '../../shared/interfaces/ibrand';
 import { IProductsFiltrationOptions } from '../../shared/interfaces/iproducts-filtration-options';
 import { DrawerModule } from 'primeng/drawer';
+import { PaginationComponent } from "../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-products',
@@ -31,7 +32,8 @@ import { DrawerModule } from 'primeng/drawer';
     FormsModule,
     ReactiveFormsModule,
     DrawerModule,
-  ],
+    PaginationComponent
+],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })

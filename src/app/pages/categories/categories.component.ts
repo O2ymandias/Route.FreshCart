@@ -1,10 +1,11 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { CategoriesService } from '../../core/services/categories.service';
 import { ICategory } from '../../shared/interfaces/icategory';
+import { PaginationComponent } from "../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-categories',
-  imports: [],
+  imports: [PaginationComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
