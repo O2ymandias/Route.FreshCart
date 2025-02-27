@@ -61,6 +61,7 @@ export class CartComponent implements OnInit {
         this._renderer2.setStyle(removeSpinner, 'display', 'none');
       }
       this._setCartData(response);
+      this._cartService.numberOfItems.set(response.numOfCartItems);
     });
   }
   updateQuantity(productId: string, newQuantity: number) {
@@ -94,6 +95,7 @@ export class CartComponent implements OnInit {
             if (response.message === 'success') {
               this.cartData = null;
               this.clearCartSpinner = false;
+              this._cartService.numberOfItems.set(0);
             }
           },
         });

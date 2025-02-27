@@ -36,13 +36,17 @@
 
   <!-- Categories -->
   <section class="my-10">
-    <h2 class="my-5 text-2xl font-bold dark:text-white">Categories</h2>
+    <h2 class="my-5 text-2xl font-bold dark:text-white">
+      {{ "home.categories" | translate }}
+    </h2>
     <app-category-slider [categories]="categories"></app-category-slider>
   </section>
 
   <!-- Products -->
   <section class="my-10">
-    <h2 class="my-5 text-2xl font-bold dark:text-white">Trending products</h2>
+    <h2 class="my-5 text-2xl font-bold dark:text-white">
+      {{ "home.trendingProducts" | translate }}
+    </h2>
 
     <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       @for (product of products | slice: 0 : 10; track product.id) {
@@ -75,7 +79,7 @@
             type="button"
             class="mb-2 me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
           >
-            Load more
+            {{ "home.loadMore" | translate }}
           </button>
         </div>
       }

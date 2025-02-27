@@ -66,12 +66,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.productDetails === null) return;
     this._cartService.addProductToCart(this.productDetails.id).subscribe({
       next: (response) => {
-        if (response.status === 'success')
+        if (response.status === 'success') {
           this._toastrService.success(response.message, 'FreshCart');
-      },
-
-      error: () => {
-        this._toastrService.error('Something went wrong', 'FreshCart');
+          this._cartService.numberOfItems.set(response.numOfCartItems);
+        }
       },
     });
   }
@@ -86,9 +84,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
             this._toastrService.success(response.message, 'FreshCart');
           }
         },
-        error: () => {
-          this._toastrService.error('Something went wrong', 'FreshCart');
-        },
       });
   }
 
@@ -100,7 +95,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       },
       error: (httpErrorResponse: HttpErrorResponse) => {
         if (httpErrorResponse.status === 400) {
-          this._router.navigate(['notfound']);
+          this._router.navigate(['/notfound']);
         }
       },
     });

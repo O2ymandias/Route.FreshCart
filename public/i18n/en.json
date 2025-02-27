@@ -17,5 +17,26 @@
       "login": "Login",
       "register": "Register"
     }
+  },
+  "home": {
+    "categories": "Categories",
+    "trendingProducts": "Trending products",
+    "loadMore": "Load more"
+  },
+  "footer": {
+    "brandName": "FreshCart",
+    "subscribeText": "Subscribe to get our latest news.",
+    "emailPlaceholder": "name@gmail.com",
+    "subscribeButton": "Subscribe",
+    "resources": "Resources",
+    "followUs": "Follow Us",
+    "legal": "Legal",
+    "angular": "Angular",
+    "tailwindCss": "Tailwind CSS",
+    "github": "Github",
+    "x": "X",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "copyright": "© 2025 FreshCart™. All Rights Reserved."
   }
 }

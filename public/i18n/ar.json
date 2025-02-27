@@ -17,5 +17,26 @@
       "login": "تسجيل الدخول",
       "register": "إنشاء حساب"
     }
+  },
+  "home": {
+    "categories": "التصنيفات",
+    "trendingProducts": "المنتجات الرائجة",
+    "loadMore": "تحميل المزيد"
+  },
+  "footer": {
+    "brandName": "فريش كارت",
+    "subscribeText": "اشترك للحصول على أحدث الأخبار.",
+    "emailPlaceholder": "name@gmail.com",
+    "subscribeButton": "اشترك",
+    "resources": "الموارد",
+    "followUs": "تابعنا",
+    "legal": "قانوني",
+    "angular": "أنجولار",
+    "tailwindCss": "تايلوند",
+    "github": "جيتهاب",
+    "x": "X",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام",
+    "copyright": "© 2025 فريش كارت™. جميع الحقوق محفوظة."
   }
 }

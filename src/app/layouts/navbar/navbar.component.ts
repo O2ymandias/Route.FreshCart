@@ -14,6 +14,7 @@ import { FlowbiteService } from '../../core/services/flowbite.service';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AppTranslationService } from '../../core/services/app-translation.service';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,12 +30,14 @@ export class NavbarComponent implements OnInit {
   readonly appTranslationService: AppTranslationService = inject(
     AppTranslationService,
   );
+  private readonly _cartService: CartService = inject(CartService);
   private readonly _darkModeService: DarkModeService = inject(DarkModeService);
 
   userName!: string;
   isLoggedIn!: boolean;
   numberOfItemsInWishlist!: number;
   currentLanguage = computed(() => this.appTranslationService.currentLang());
+  numberOfItemsInCart = computed(() => this._cartService.numberOfItems());
 
   ngOnInit() {
     // Init Flowbite

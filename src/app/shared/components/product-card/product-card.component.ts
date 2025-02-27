@@ -61,11 +61,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.status === 'success') {
             this._toastrService.success(response.message, 'FreshCart');
+            this._cartService.numberOfItems.set(response.numOfCartItems);
           }
-        },
-
-        error: () => {
-          this._toastrService.error('Something went wrong', 'FreshCart');
         },
       });
   }
@@ -83,10 +80,6 @@ export class ProductCardComponent implements OnInit, OnDestroy {
               'FreshCart',
             );
           }
-        },
-
-        error: () => {
-          this._toastrService.error('Something went wrong', 'FreshCart');
         },
       });
   }

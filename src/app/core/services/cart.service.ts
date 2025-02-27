@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -8,7 +14,18 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private readonly _httpClient: HttpClient) {}
+  constructor(
+    private readonly _httpClient: HttpClient,
+    @Inject(PLATFORM_ID) platformId: object,
+  ) {
+    if (isPlatformBrowser(platformId)) {
+      this.getLoggedUserCart().subscribe((response) =>
+        this.numberOfItems.set(response.numOfCartItems),
+      );
+    }
+  }
+
+  numberOfItems: WritableSignal<number> = signal(0);
 
   addProductToCart(productId: string): Observable<any> {
     return this._httpClient.post(`${environment.baseUrl}/api/v1/cart`, {

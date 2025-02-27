@@ -9,7 +9,7 @@ import { CategorySliderComponent } from '../../shared/components/category-slider
 import { GalleriaModule } from 'primeng/galleria';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +19,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     GalleriaModule,
     SlicePipe,
     FormsModule,
+    TranslatePipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
