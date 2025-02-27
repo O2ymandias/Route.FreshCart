@@ -1,4 +1,6 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { CategoriesService } from '../../core/services/categories.service';
+import { ICategory } from '../../shared/interfaces/icategory';
 
 @Component({
   selector: 'app-categories',
@@ -7,12 +9,26 @@ import { Component, signal, WritableSignal } from '@angular/core';
   styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent {
-  price: number = 10;
-  quantity: number = 1;
+  private readonly _categoriesService: CategoriesService =
+    inject(CategoriesService);
+  displayCategories: WritableSignal<ICategory[]> = signal([]);
+  pageNumber: WritableSignal<number> = signal(1);
+  pageSize: WritableSignal<number> = signal(5);
 
-  totalPrice: number = this.price * this.quantity;
+  ngOnInit(): void {
+    this.getCategories(this.pageNumber());
+  }
 
-  changeQuantity(): void {
-    this.price = this.price + 10;
+  getCategories(pageNumber: number): void {
+    this._categoriesService
+      .getAllCategories(this.pageSize().toString(), pageNumber.toString())
+      .subscribe((response) => {
+        this.displayCategories.set(response.data);
+      });
+  }
+  moveToPage(pageNumber: number): void {
+    if (pageNumber < 1) return;
+    this.pageNumber.set(pageNumber);
+    this.getCategories(pageNumber);
   }
 }

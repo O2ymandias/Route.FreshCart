@@ -15,4 +15,6 @@ export class BrandsService {
     if (page) url += `page=${page}&`;
     return this._httpClient.get(url);
   }
+
+  
 }

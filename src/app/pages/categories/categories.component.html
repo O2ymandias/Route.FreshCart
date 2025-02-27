@@ -1,7 +1,88 @@
-<div class="py-10">
-  <p>Price: {{ price }}</p>
-  <p>Quantity: {{ quantity }}</p>
-  <p>Total Price: {{ totalPrice }}</p>
+<section class="my-10">
+  <h1 class="my-4 text-center text-3xl font-bold text-gray-900 dark:text-white">
+    All Categories
+  </h1>
 
-  <button (click)="changeQuantity()" class="main-btn">Increment</button>
-</div>
+  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    @for (category of displayCategories(); track category._id) {
+      <div
+        class="w-full max-w-sm rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-600 dark:bg-slate-700"
+      >
+        <img
+          class="mx-auto h-[250px] rounded-t-lg object-cover p-8"
+          [src]="category.image"
+          [alt]="category.name"
+        />
+        <div class="px-5 pb-5">
+          <h5
+            class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+          >
+            {{ category.name }}
+          </h5>
+        </div>
+      </div>
+    } @empty {
+      <div
+        class="col-span-full my-5 flex flex-col items-center justify-center space-y-5"
+      >
+        <i class="fa-solid fa-5x fa-magnifying-glass"></i>
+        <p class="text-2xl font-semibold text-gray-900 dark:text-white">
+          No Categories Found
+        </p>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  <nav class="my-5 flex justify-center" aria-label="Page navigation">
+    <ul class="inline-flex -space-x-px text-sm">
+      <li>
+        <a
+          (click)="moveToPage(pageNumber() - 1)"
+          class="ms-0 flex h-8 cursor-pointer items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >Previous</a
+        >
+      </li>
+      <li>
+        <a
+          (click)="moveToPage(1)"
+          [class.active-page]="pageNumber() === 1"
+          class="flex h-8 cursor-pointer items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >1</a
+        >
+      </li>
+      <li>
+        <a
+          (click)="moveToPage(2)"
+          [class.active-page]="pageNumber() === 2"
+          class="flex h-8 cursor-pointer items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >2</a
+        >
+      </li>
+      <li>
+        <a
+          (click)="moveToPage(3)"
+          [class.active-page]="pageNumber() === 3"
+          class="flex h-8 cursor-pointer items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >3</a
+        >
+      </li>
+      <li>
+        <a
+          (click)="moveToPage(4)"
+          [class.active-page]="pageNumber() === 4"
+          class="flex h-8 cursor-pointer items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >4</a
+        >
+      </li>
+
+      <li>
+        <a
+          (click)="moveToPage(pageNumber() + 1)"
+          class="flex h-8 cursor-pointer items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </nav>
+</section>
