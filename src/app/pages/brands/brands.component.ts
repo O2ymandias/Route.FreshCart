@@ -2,12 +2,13 @@ import {
   Component,
   inject,
   OnInit,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
 import { BrandsService } from '../../core/services/brands.service';
 import { IBrand } from '../../shared/interfaces/ibrand';
-import { PaginationComponent } from "../../shared/components/pagination/pagination.component";
+import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-brands',
