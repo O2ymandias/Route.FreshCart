@@ -35,7 +35,9 @@ export class NavbarComponent implements OnInit {
 
   userName!: string;
   isLoggedIn!: boolean;
-  numberOfItemsInWishlist!: number;
+  numberOfItemsInWishlist = computed(() =>
+    this._wishlistService.numberOfItems(),
+  );
   currentLanguage = computed(() => this.appTranslationService.currentLang());
   numberOfItemsInCart = computed(() => this._cartService.numberOfItems());
 
@@ -49,10 +51,6 @@ export class NavbarComponent implements OnInit {
       );
       this._authService.userName.subscribe((value) => (this.userName = value));
     }
-    // Get the number of items in the wishlist
-    this._wishlistService.numberOfItems.subscribe(
-      (res) => (this.numberOfItemsInWishlist = res),
-    );
   }
 
   darkModeOn(): void {

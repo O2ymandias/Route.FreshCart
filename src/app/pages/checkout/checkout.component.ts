@@ -11,7 +11,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CartService } from '../../core/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -19,6 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { IUserData } from '../../shared/interfaces/iuser-data';
 import { Subscription } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -34,6 +34,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _platformId: object = inject(PLATFORM_ID);
   private readonly _ordersService: OrdersService = inject(OrdersService);
+  private readonly _cartService: CartService = inject(CartService);
 
   // Properties
   cartId: string | null = null;
@@ -63,8 +64,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           .payWithCredit(this.cartId, this.checkoutForm.value)
           .subscribe({
             next: (response) => {
-              if (response.status === 'success')
+              if (response.status === 'success') {
                 window.open(response.session.url, '_self');
+                this._cartService.numberOfItems.set(0);
+              }
             },
           });
       }
@@ -80,11 +83,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           .payWithCash(this.cartId, this.checkoutForm.value)
           .subscribe({
             next: (response) => {
-              if (response.status === 'success')
+              if (response.status === 'success') {
                 this._router.navigate(['/allorders']);
-            },
-            error: (error) => {
-              console.log(error);
+                this._cartService.numberOfItems.set(0);
+              }
             },
           });
       }

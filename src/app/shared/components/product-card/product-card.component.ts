@@ -73,8 +73,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 'success') {
-            console.log(response);
-            this._wishlistService.updateNumberOfItems();
+            this._wishlistService.numberOfItems.set(response.data.length);
             this._toastrService.success(
               'Product added to wishlist',
               'FreshCart',
@@ -91,11 +90,11 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 'success') {
+            this._wishlistService.numberOfItems.set(response.data.length);
             this.getLoggedUserWishlistSubscription = this._wishlistService
               .getLoggedUserWishlist()
               .subscribe({
                 next: (response) => {
-                  this._wishlistService.updateNumberOfItems();
                   this.isRemoving = false;
                   this.updatedproductsEmitter.emit(response);
                 },

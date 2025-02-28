@@ -1,6 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
@@ -17,11 +24,12 @@ export class WishlistService {
       localStorage.getItem('userToken')
     ) {
       // Setting the number of items in the wishlist
-      this.updateNumberOfItems();
+      this.getNumberOfItems();
     }
   }
 
-  numberOfItems: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  // numberOfItems: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  numberOfItems: WritableSignal<number> = signal(0);
 
   addProductToWishlist(productId: string): Observable<any> {
     return this._httpClient.post(`${environment.baseUrl}/api/v1/wishlist`, {
@@ -39,9 +47,10 @@ export class WishlistService {
     return this._httpClient.get(`${environment.baseUrl}/api/v1/wishlist`);
   }
 
-  updateNumberOfItems(): void {
+  getNumberOfItems(): void {
     this.getLoggedUserWishlist().subscribe((response) => {
-      this.numberOfItems.next(response.count);
+      this.numberOfItems.set(response.data.length);
+      console.log(this.numberOfItems());
     });
   }
 }

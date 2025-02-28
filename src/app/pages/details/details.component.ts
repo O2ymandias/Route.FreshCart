@@ -80,8 +80,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 'success') {
-            this._wishListService.updateNumberOfItems();
             this._toastrService.success(response.message, 'FreshCart');
+            this._wishListService.numberOfItems.set(response.data.length);
           }
         },
       });

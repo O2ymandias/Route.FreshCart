@@ -25,11 +25,11 @@
         >
           <i class="fa-solid fa-lg fa-heart"></i>
 
-          @if (numberOfItemsInWishlist > 0) {
+          @if (numberOfItemsInWishlist() > 0) {
             <span
               class="absolute right-0 top-0 ms-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-200 text-xs font-medium text-red-800"
             >
-              {{ numberOfItemsInWishlist }}
+              {{ numberOfItemsInWishlist() }}
             </span>
           }
         </a>
