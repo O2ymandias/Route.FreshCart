@@ -38,5 +38,25 @@
     "privacyPolicy": "سياسة الخصوصية",
     "termsConditions": "الشروط والأحكام",
     "copyright": "© 2025 فريش كارت™. جميع الحقوق محفوظة."
+  },
+  "products": {
+    "allProducts": "جميع المنتجات",
+    "searchPlaceholder": "ابحث بالعنوان أو الوصف...",
+    "sort": "ترتيب",
+    "filter": "تصفية",
+    "sorting": {
+      "lowestToHighest": "من الأقل إلى الأعلى",
+      "highestToLowest": "من الأعلى إلى الأقل"
+    }
+  },
+  "pagination": {
+    "previous": "السابق",
+    "next": "التالي",
+    "pages": {
+      "one": "١",
+      "two": "٢",
+      "three": "٣",
+      "four": "٤"
+    }
   }
 }

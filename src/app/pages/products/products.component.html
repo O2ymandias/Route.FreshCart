@@ -1,6 +1,6 @@
 <section class="my-10">
   <h1 class="my-4 text-center text-3xl font-bold text-gray-900 dark:text-white">
-    All Products
+    {{ "products.allProducts" | translate }}
   </h1>
 
   <div class="mx-auto my-5 w-[75%] space-y-4">
@@ -37,7 +37,7 @@
           (input)="search(searchValue)"
           id="default-search"
           class="block w-full rounded-lg border border-slate-300 bg-slate-50 p-4 ps-10 text-sm text-slate-900 focus:border-green-500 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:focus:border-green-500 dark:focus:ring-green-500"
-          placeholder="Search by title, description..."
+          placeholder=" {{ 'products.searchPlaceholder' | translate }} "
           required
         />
       </div>
@@ -51,9 +51,13 @@
         (change)="sort(sortValue)"
         class="block max-w-sm cursor-pointer rounded-lg border border-slate-300 bg-slate-100 p-2.5 text-sm text-slate-900 hover:bg-slate-200 focus:border-green-500 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:hover:bg-slate-800 dark:focus:border-green-500 dark:focus:ring-green-500"
       >
-        <option [value]="''">Sort</option>
-        <option value="price">Lowest to highest</option>
-        <option value="-price">Highest to lowest</option>
+        <option [value]="''">{{ "products.sort" | translate }}</option>
+        <option value="price">
+          {{ "products.sorting.lowestToHighest" | translate }}
+        </option>
+        <option value="-price">
+          {{ "products.sorting.highestToLowest" | translate }}
+        </option>
       </select>
 
       <!-- Filter -->

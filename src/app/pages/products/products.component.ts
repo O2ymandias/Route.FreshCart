@@ -24,6 +24,7 @@ import { IBrand } from '../../shared/interfaces/ibrand';
 import { IProductsFiltrationOptions } from '../../shared/interfaces/iproducts-filtration-options';
 import { DrawerModule } from 'primeng/drawer';
 import { PaginationComponent } from "../../shared/components/pagination/pagination.component";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-products',
@@ -32,7 +33,8 @@ import { PaginationComponent } from "../../shared/components/pagination/paginati
     FormsModule,
     ReactiveFormsModule,
     DrawerModule,
-    PaginationComponent
+    PaginationComponent,
+    TranslatePipe
 ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',

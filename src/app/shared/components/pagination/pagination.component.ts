@@ -5,10 +5,11 @@ import {
   output,
   OutputEmitterRef,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })

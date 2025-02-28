@@ -38,5 +38,25 @@
     "privacyPolicy": "Privacy Policy",
     "termsConditions": "Terms & Conditions",
     "copyright": "© 2025 FreshCart™. All Rights Reserved."
+  },
+  "products": {
+    "allProducts": "All Products",
+    "searchPlaceholder": "Search by title, description...",
+    "sort": "Sort",
+    "filter": "Filter",
+    "sorting": {
+      "lowestToHighest": "Lowest to highest",
+      "highestToLowest": "Highest to lowest"
+    }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "pages": {
+      "one": "1",
+      "two": "2",
+      "three": "3",
+      "four": "4"
+    }
   }
 }
