@@ -2,10 +2,11 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { CategoriesService } from '../../core/services/categories.service';
 import { ICategory } from '../../shared/interfaces/icategory';
 import { PaginationComponent } from "../../shared/components/pagination/pagination.component";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories',
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, TranslatePipe],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })

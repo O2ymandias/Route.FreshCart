@@ -10,10 +10,11 @@ import { CartService } from '../../core/services/cart.service';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { CurrencyPipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-details',
-  imports: [GalleriaModule, ButtonModule, CurrencyPipe],
+  imports: [GalleriaModule, ButtonModule, CurrencyPipe, TranslatePipe],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })

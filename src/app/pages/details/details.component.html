@@ -12,7 +12,8 @@
         (click)="displayBasic = true"
         class="mx-auto my-2 block w-fit rounded-lg bg-gradient-to-br from-green-400 to-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-bl focus:outline-none dark:focus:ring-green-800"
       >
-        Preview More <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
+        {{ "details.previewMore" | translate }}
+        <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
       </button>
 
       <p-galleria
@@ -59,18 +60,25 @@
         @if (productDetails && productDetails.quantity >= 100) {
           <span
             class="me-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
-            >Available</span
           >
-        } @else if (productDetails && productDetails.quantity < 100) {
+            {{ "details.availability.available" | translate }}
+          </span>
+        } @else if (
+          productDetails &&
+          productDetails.quantity > 0 &&
+          productDetails.quantity < 100
+        ) {
           <span
             class="me-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-            >Limited</span
           >
+            {{ "details.availability.limited" | translate }}
+          </span>
         } @else {
           <span
             class="me-2 rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300"
-            >Not available</span
           >
+            {{ "details.availability.unavailable" | translate }}
+          </span>
         }
       </div>
 
@@ -97,7 +105,7 @@
             d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
           />
         </svg>
-        Add to wishlist
+        {{ "productCard.addToWishlist" | translate }}
       </button>
 
       <!-- Rating -->
@@ -119,7 +127,7 @@
           {{ productDetails?.ratingsAverage }}
         </p>
         <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-          out of
+          {{ "details.outOf" | translate }}
         </p>
         <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
           5
@@ -130,7 +138,9 @@
       <div class="text-3xl font-bold text-gray-900 dark:text-white">
         {{ productDetails?.price | currency: "GBP" }}
       </div>
-      <button (click)="addProductToCart()" class="main-btn">Add to cart</button>
+      <button (click)="addProductToCart()" class="main-btn">
+        {{ "details.addToCart" | translate }}
+      </button>
     </div>
   </div>
 </section>

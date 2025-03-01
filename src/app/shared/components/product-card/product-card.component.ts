@@ -14,10 +14,11 @@ import { WishlistService } from '../../../core/services/wishlist.service';
 import { Subscription } from 'rxjs';
 import { CurrencyPipe, TitleCasePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-card',
-  imports: [RouterLink, TitleCasePipe, CurrencyPipe],
+  imports: [RouterLink, TitleCasePipe, CurrencyPipe, TranslatePipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
@@ -26,6 +27,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   private readonly _cartService: CartService = inject(CartService);
   private readonly _wishlistService: WishlistService = inject(WishlistService);
   private readonly _toastrService: ToastrService = inject(ToastrService);
+  private readonly _translateService: TranslateService =
+    inject(TranslateService);
 
   // Input Properties
   imagePath: InputSignal<string> = input.required();
@@ -60,7 +63,11 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.status === 'success') {
-            this._toastrService.success(response.message, 'FreshCart');
+            let message =
+              this._translateService.currentLang === 'en'
+                ? 'Product added to cart'
+                : 'تم إضافة المنتج إلى السلة';
+            this._toastrService.success(message, 'FreshCart');
             this._cartService.numberOfItems.set(response.numOfCartItems);
           }
         },
@@ -74,10 +81,11 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.status === 'success') {
             this._wishlistService.numberOfItems.set(response.data.length);
-            this._toastrService.success(
-              'Product added to wishlist',
-              'FreshCart',
-            );
+            let message =
+              this._translateService.currentLang === 'en'
+                ? 'Product added to wishlist'
+                : 'تم إضافة المنتج إلى قائمة الرغبات';
+            this._toastrService.success(message, 'FreshCart');
           }
         },
       });

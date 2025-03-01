@@ -47,7 +47,8 @@
     "sorting": {
       "lowestToHighest": "من الأقل إلى الأعلى",
       "highestToLowest": "من الأعلى إلى الأقل"
-    }
+    },
+    "noProductsFound": "لم يتم العثور على منتجات"
   },
   "pagination": {
     "previous": "السابق",
@@ -57,6 +58,127 @@
       "two": "٢",
       "three": "٣",
       "four": "٤"
+    }
+  },
+  "brands": {
+    "allBrands": "جميع العلامات التجارية",
+    "noBrandsFound": "لم يتم العثور على علامات تجارية"
+  },
+  "categories": {
+    "allCategories": "جميع التصنيفات",
+    "noCategoriesFound": "لم يتم العثور على تصنيفات"
+  },
+  "login": {
+    "loginNow": "تسجيل الدخول الآن",
+    "emailAddress": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "loginButton": "تسجيل الدخول",
+    "registerNow": "إنشاء حساب",
+    "registerPrompt": "ليس لديك حساب؟",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "forgotPasswordPrompt": "هل نسيت كلمة المرور الخاصة بك؟",
+    "emailErrors": {
+      "required": "البريد الإلكتروني مطلوب",
+      "email": "الرجاء ادخال عنوان بريد صحيح"
+    },
+    "passwordErrors": {
+      "required": "كلمة المرور مطلوبة"
+    }
+  },
+  "register": {
+    "registerNow": "إنشاء حساب",
+    "name": "الاسم",
+    "emailAddress": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "phone": "رقم الهاتف",
+    "registerButton": "تسجيل",
+    "loginNow": "تسجيل الدخول الآن",
+    "loginPrompt": "هل لديك حساب؟",
+
+    "validation": {
+      "nameRequired": "يرجى إدخال اسمك.",
+      "nameMinLength": "يجب أن يكون الاسم 3 أحرف على الأقل.",
+      "nameMaxLength": "لا يمكن أن يكون الاسم أطول من 20 حرفًا.",
+      "emailRequired": "يرجى إدخال عنوان البريد الإلكتروني.",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صالح.",
+      "passwordRequired": "يرجى إدخال كلمة المرور.",
+      "passwordPattern": "يجب أن تبدأ كلمة المرور بحرف كبير وأن تكون 8 أحرف على الأقل.",
+      "passwordMismatch": "كلمة المرور وتأكيد كلمة المرور غير متطابقين.",
+      "phoneRequired": "يرجى إدخال رقم الهاتف.",
+      "phonePattern": "يرجى إدخال رقم هاتف مصري صالح (مثل 01012345678، 01112345678، 01212345678، أو 01512345678)."
+    }
+  },
+  "forgetPassword": {
+    "forgetPassword": "نسيت كلمة المرور",
+    "emailAddress": "البريد الإلكتروني",
+    "sendButton": "ارسال",
+    "resetCode": "رمز استعادة",
+    "resetCodeSent": "تم إرسال رمز إعادة التعيين إلى بريدك الإلكتروني.",
+    "validation": {
+      "resetCodeRequired": "يرجى إدخال رمز استعادة."
+    },
+    "newPassword": "كلمة المرور الجديدة"
+  },
+
+  "cart": {
+    "title": "سلة التسوق",
+    "emptyMessage": "سلة التسوق فارغة",
+    "emptyDescription": "أضف المنتجات أثناء التسوق، حتى تكون جاهزة للدفع لاحقًا",
+    "startShopping": "ابدأ التسوق",
+    "itemsAdded": "من العناصر تمت اضافتها إلى سلة التسوق الخاصة بك",
+    "orderSummary": "ملخص الطلب",
+    "originalPrice": "السعر الأصلي",
+    "tax": "الضريبة",
+    "total": "الإجمالي",
+    "checkout": "المتابعة إلى الدفع",
+    "continueShopping": "متابعة التسوق",
+    "priceLabel": "ج.م",
+    "quantity": "الكمية",
+    "remove": "إزالة",
+    "removeAll": "إزالة الكل",
+    "addToWishlist": "أضف إلى قائمة الرغبات",
+    "or": "أو"
+  },
+  "wishlist": {
+    "title": "قائمة الرغبات",
+    "emptyMessage": "قائمة الرغبات فارغة",
+    "emptyDescription": "أضف المنتجات لقائمة الرغبات اثناء التسوق",
+    "startShopping": "ابدأ التسوق",
+    "itemsAdded": "من العناصر تمت اضافتها إلى قائمة الرغبات الخاصة بك"
+  },
+  "productCard": {
+    "addToCart": "أضف الى السلة",
+    "addToWishlist": "أضف الى قائمة الرغبات",
+    "availability": {
+      "available": "متوفر",
+      "limited": "محدود",
+      "unavailable": "غير متوفر"
+    }
+  },
+  "details": {
+    "addToCart": "أضف الى السلة",
+    "addToWishlist": "أضف الى قائمة الرغبات",
+    "previewMore": "معاينة المزيد",
+    "availability": {
+      "available": "متوفر",
+      "limited": "محدود",
+      "unavailable": "غير متوفر"
+    },
+    "outOf": "من"
+  },
+  "checkout": {
+    "form": {
+      "phone": "الهاتف",
+      "city": "المدينة",
+      "details": "التفاصيل",
+      "paymentMethods": {
+        "credit": "بطاقة الائتمان",
+        "cash": "نقدًا"
+      }
+    },
+    "validation": {
+      "cityRequired": "يرجى ادخال المدينة."
     }
   }
 }

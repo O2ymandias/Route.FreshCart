@@ -9,10 +9,11 @@ import {
 import { BrandsService } from '../../core/services/brands.service';
 import { IBrand } from '../../shared/interfaces/ibrand';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-brands',
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, TranslatePipe],
   templateUrl: './brands.component.html',
   styleUrl: './brands.component.scss',
 })

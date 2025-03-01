@@ -11,8 +11,9 @@
       <label
         for="phone"
         class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-        >Phone</label
       >
+        {{ "checkout.form.phone" | translate }}
+      </label>
       <input
         formControlName="phone"
         type="tel"
@@ -40,11 +41,12 @@
           <span class="sr-only">Info</span>
 
           @if (phoneControl?.hasError("required")) {
-            <p>Please enter your phone number.</p>
+            <p>
+              {{ "register.validation.phoneRequired" | translate }}
+            </p>
           } @else if (phoneControl?.hasError("pattern")) {
             <p>
-              Please enter a valid Egyptian phone number (e.g., 01012345678,
-              01112345678, 01212345678, or 01512345678).
+              {{ "register.validation.phonePattern" | translate }}
             </p>
           }
         </div>
@@ -56,8 +58,9 @@
       <label
         for="city"
         class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-        >City</label
       >
+        {{ "checkout.form.city" | translate }}
+      </label>
       <input
         formControlName="city"
         type="text"
@@ -84,7 +87,9 @@
           </svg>
           <span class="sr-only">Info</span>
 
-          <p>Please enter your city.</p>
+          <p>
+            {{ "checkout.validation.cityRequired" | translate }}
+          </p>
         </div>
       }
     </div>
@@ -94,8 +99,9 @@
       <label
         for="details"
         class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-        >Details</label
       >
+        {{ "checkout.form.details" | translate }}
+      </label>
       <textarea
         formControlName="details"
         id="details"
@@ -111,7 +117,9 @@
         type="button"
         class="mb-2 me-2 inline-flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-800"
       >
-        <span>Cash</span>
+        <span>
+          {{ "checkout.form.paymentMethods.cash" | translate }}
+        </span>
         <i class="fa-solid fa-sack-dollar ms-2 text-green-700"></i>
       </button>
 
@@ -121,7 +129,9 @@
         type="button"
         class="mb-2 me-2 inline-flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-800"
       >
-        <span>Credit</span>
+        <span>
+          {{ "checkout.form.paymentMethods.credit" | translate }}
+        </span>
         <i class="fa-regular fa-credit-card ms-2 text-sky-700"></i>
       </button>
     </div>

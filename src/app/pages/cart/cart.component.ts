@@ -17,10 +17,20 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { CurrencyPipe } from '@angular/common';
+import { AppTranslationService } from '../../core/services/app-translation.service';
 
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink, FormsModule, ConfirmDialog, ToastModule],
+  imports: [
+    RouterLink,
+    FormsModule,
+    ConfirmDialog,
+    ToastModule,
+    TranslatePipe,
+    CurrencyPipe,
+  ],
   providers: [ConfirmationService],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
@@ -33,6 +43,9 @@ export class CartComponent implements OnInit {
 
   private readonly _confirmationService: ConfirmationService =
     inject(ConfirmationService);
+
+  private readonly _translateService: TranslateService =
+    inject(TranslateService);
 
   // Properties
   cartData: ICartData | null = null;
@@ -74,18 +87,34 @@ export class CartComponent implements OnInit {
       });
   }
   clearCart(): void {
+    let message =
+      this._translateService.currentLang === 'en'
+        ? 'Are you sure you want to clear your cart?'
+        : 'هل أنت متأكد من مسح سلة التسوق الخاصة بك؟';
+
+    let header =
+      this._translateService.currentLang === 'en'
+        ? 'Clear Cart'
+        : 'مسح سلة التسوق';
+
+    let cancelLabel =
+      this._translateService.currentLang === 'en' ? 'Cancel' : 'إلغاء';
+
+    let deleteLabel =
+      this._translateService.currentLang === 'en' ? 'Delete' : 'حذف';
+
     this._confirmationService.confirm({
-      message: 'Are you sure you want to clear your cart?',
-      header: 'Clear',
+      message: message,
+      header: header,
       icon: 'pi pi-info-circle',
       rejectLabel: 'Cancel',
       rejectButtonProps: {
-        label: 'Cancel',
+        label: cancelLabel,
         severity: 'secondary',
         outlined: true,
       },
       acceptButtonProps: {
-        label: 'Delete',
+        label: deleteLabel,
         severity: 'danger',
       },
       accept: () => {
@@ -106,9 +135,6 @@ export class CartComponent implements OnInit {
     this._wishlistService.addProductToWishlist(productId).subscribe({
       next: (response) => {
         console.log(response);
-      },
-      error: (error) => {
-        console.log(error);
       },
     });
   }

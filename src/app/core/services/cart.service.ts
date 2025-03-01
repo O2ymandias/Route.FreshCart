@@ -18,7 +18,7 @@ export class CartService {
     private readonly _httpClient: HttpClient,
     @Inject(PLATFORM_ID) platformId: object,
   ) {
-    if (isPlatformBrowser(platformId)) {
+    if (isPlatformBrowser(platformId) && localStorage.getItem('userToken')) {
       this.getLoggedUserCart().subscribe((response) =>
         this.numberOfItems.set(response.numOfCartItems),
       );

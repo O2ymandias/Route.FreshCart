@@ -47,7 +47,8 @@
     "sorting": {
       "lowestToHighest": "Lowest to highest",
       "highestToLowest": "Highest to lowest"
-    }
+    },
+    "noProductsFound": "No products found"
   },
   "pagination": {
     "previous": "Previous",
@@ -57,6 +58,126 @@
       "two": "2",
       "three": "3",
       "four": "4"
+    }
+  },
+  "brands": {
+    "allBrands": "All Brands",
+    "noBrandsFound": "No Brands Found"
+  },
+  "categories": {
+    "allCategories": "All Categories",
+    "noCategoriesFound": "No Categories Found"
+  },
+  "login": {
+    "loginNow": "Login Now",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "loginButton": "Login",
+    "registerNow": "Register Now",
+    "registerPrompt": "Don't have an account?",
+    "forgotPassword": "Forget Password?",
+    "forgotPasswordPrompt": "Did you forget your password?",
+    "emailErrors": {
+      "required": "Email is required",
+      "email": "Please enter a valid email address"
+    },
+    "passwordErrors": {
+      "required": "Password is required"
+    }
+  },
+  "register": {
+    "registerNow": "Register Now",
+    "name": "Name",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phone": "Phone",
+    "registerButton": "Register",
+    "loginNow": "Login Now",
+    "loginPrompt": "Do you have an account?",
+    "validation": {
+      "nameRequired": "Please enter your name.",
+      "nameMinLength": "Your name must be at least 3 characters long.",
+      "nameMaxLength": "Your name cannot be longer than 20 characters.",
+      "emailRequired": "Please enter your email address.",
+      "emailInvalid": "Please enter a valid email.",
+      "passwordRequired": "Please enter your password.",
+      "passwordPattern": "Password must start with an uppercase letter and be at least 8 characters long.",
+      "passwordMismatch": "Password and confirm password do not match.",
+      "phoneRequired": "Please enter your phone number.",
+      "phonePattern": "Please enter a valid Egyptian phone number (e.g., 01012345678, 01112345678, 01212345678, or 01512345678)."
+    }
+  },
+  "forgetPassword": {
+    "forgetPassword": "Forget Password",
+    "emailAddress": "Email Address",
+    "sendButton": "Send",
+    "resetCode": "Reset Code",
+    "resetCodeSent": "Reset code has been sent to your email.",
+    "validation": {
+      "resetCodeRequired": "Please enter your reset code."
+    },
+    "newPassword": "New Password"
+  },
+
+  "cart": {
+    "title": "Your Cart",
+    "emptyMessage": "Your cart is empty",
+    "emptyDescription": "Add products while you shop, so they'll be ready for checkout later",
+    "startShopping": "Start Shopping",
+    "itemsAdded": "Items were added to your cart",
+    "orderSummary": "Order Summary",
+    "originalPrice": "Original price",
+    "tax": "Tax",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "continueShopping": "Continue Shopping",
+    "priceLabel": "LE",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "removeAll": "Remove All",
+    "addToWishlist": "Add to wishlist",
+    "or": "or"
+  },
+  "wishlist": {
+    "title": "Your Wishlist",
+    "emptyMessage": "Your wishlist is empty",
+    "emptyDescription": "Add products to wishlist while you shop",
+    "startShopping": "Start Shopping",
+    "itemsAdded": "Items were added to your wishlist"
+  },
+  "productCard": {
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to Wishlist",
+    "availability": {
+      "available": "Available",
+      "limited": "Limited",
+      "unavailable": "Not available"
+    }
+  },
+  "details": {
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to Wishlist",
+    "previewMore": "Preview More",
+    "availability": {
+      "available": "Available",
+      "limited": "Limited",
+      "unavailable": "Not available"
+    },
+    "outOf": "out of"
+  },
+  "checkout": {
+    "form": {
+      "phone": "Phone",
+      "city": "City",
+      "details": "Details",
+      "paymentMethods": {
+        "credit": "Credit",
+        "cash": "Cash"
+      }
+    },
+    "validation": {
+      "cityRequired": "Please enter your city."
     }
   }
 }

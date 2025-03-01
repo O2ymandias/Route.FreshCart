@@ -19,10 +19,11 @@ import { IUserData } from '../../shared/interfaces/iuser-data';
 import { Subscription } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
 import { CartService } from '../../core/services/cart.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslatePipe],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
 })

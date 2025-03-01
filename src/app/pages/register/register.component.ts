@@ -6,21 +6,16 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  Component,
-  ElementRef,
-  inject,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, OnDestroy, ViewChild } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -29,15 +24,11 @@ export class RegisterComponent implements OnDestroy {
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _router: Router = inject(Router);
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
+  private readonly _toastrService: ToastrService = inject(ToastrService);
 
   // Properties
   @ViewChild('countdown')
-  countDown!: ElementRef<HTMLElement>;
-  countDownInterval!: NodeJS.Timeout;
-  goToLoginAfter: number = 5;
   isLoading: boolean = false;
-  isRegisteredSuccessfully: boolean = false;
-  serverErrorMsg: string = '';
   registerUserSubscription!: Subscription;
   registerForm: FormGroup = this._formBuilder.group(
     {
@@ -68,7 +59,6 @@ export class RegisterComponent implements OnDestroy {
   // Hooks
 
   ngOnDestroy(): void {
-    clearInterval(this.countDownInterval);
     this.registerUserSubscription?.unsubscribe();
   }
 
@@ -80,18 +70,17 @@ export class RegisterComponent implements OnDestroy {
         .registerUser(this.registerForm.value)
         .subscribe({
           next: (response) => {
-            this.isLoading = false;
-            this.isRegisteredSuccessfully = true;
-            this.countDownInterval = this._countDown();
+            if (response.message === 'success') {
+              this.isLoading = false;
+              this._toastrService.success(
+                'Registered successfully',
+                'FreshCart',
+              );
 
-            setTimeout(() => {
-              clearInterval(this.countDownInterval);
-              this._router.navigate(['login']);
-            }, this.goToLoginAfter * 1000);
-          },
-          error: (httpErrorResponse: HttpErrorResponse) => {
-            this.serverErrorMsg = httpErrorResponse.error.message;
-            this.isLoading = false;
+              setTimeout(() => {
+                this._router.navigate(['login']);
+              }, 500);
+            }
           },
         });
     } else {
@@ -103,10 +92,5 @@ export class RegisterComponent implements OnDestroy {
       formGroup.get('rePassword')?.value
       ? null
       : { mismatch: true };
-  }
-  _countDown(): NodeJS.Timeout {
-    return setInterval(() => {
-      this.goToLoginAfter--;
-    }, 1000);
   }
 }
