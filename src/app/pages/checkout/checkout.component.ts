@@ -43,6 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   checkoutForm!: FormGroup;
 
   // Subscriptions
+  cartIdSubscription: Subscription | null = null;
   payWithCreditSubscription: Subscription | null = null;
   payWithCashSubscription: Subscription | null = null;
 
@@ -51,10 +52,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this._initCheckoutForm();
     this._initCartId();
     this._initUserId();
-  }
-  ngOnDestroy(): void {
-    this.payWithCreditSubscription?.unsubscribe();
-    this.payWithCashSubscription?.unsubscribe();
   }
 
   // Methods
@@ -107,7 +104,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
   private _initCartId() {
-    this._activatedRoute.paramMap.subscribe({
+    this.cartIdSubscription = this._activatedRoute.paramMap.subscribe({
       next: (params) => (this.cartId = params.get('cartId')),
     });
   }
@@ -117,5 +114,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       const userData: IUserData | null = this._authService.decodeToken(token);
       if (userData) this.userId = userData.id;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.payWithCreditSubscription?.unsubscribe();
+    this.payWithCashSubscription?.unsubscribe();
+    this.cartIdSubscription?.unsubscribe();
   }
 }

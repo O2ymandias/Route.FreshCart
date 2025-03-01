@@ -28,10 +28,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
   private readonly _toastrService: ToastrService = inject(ToastrService);
 
   // Subscriptions
-  private _getProductByIdSubscription: Subscription | null = null;
-  private _getRouteParamSubscription: Subscription | null = null;
-  private _addProductToCartSubscription: Subscription | null = null;
-  private _addProductToWishlistSubscription: Subscription | null = null;
+  getProductByIdSubscription: Subscription | null = null;
+  getRouteParamSubscription: Subscription | null = null;
+  addProductToCartSubscription: Subscription | null = null;
+  addProductToWishlistSubscription: Subscription | null = null;
 
   // Properties
   productDetails: IProduct | null = null;
@@ -65,18 +65,28 @@ export class DetailsComponent implements OnInit, OnDestroy {
   // Methods
   addProductToCart(): void {
     if (this.productDetails === null) return;
-    this._cartService.addProductToCart(this.productDetails.id).subscribe({
-      next: (response) => {
-        if (response.status === 'success') {
-          this._toastrService.success(response.message, 'FreshCart');
-          this._cartService.numberOfItems.set(response.numOfCartItems);
-        }
-      },
-    });
+
+    // Making sure the previous subscription is unsubscribed
+    this.addProductToCartSubscription?.unsubscribe();
+
+    this.addProductToCartSubscription = this._cartService
+      .addProductToCart(this.productDetails.id)
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this._toastrService.success(response.message, 'FreshCart');
+            this._cartService.numberOfItems.set(response.numOfCartItems);
+          }
+        },
+      });
   }
   addProductToWishlist(): void {
     if (this.productDetails === null) return;
-    this._addProductToWishlistSubscription = this._wishListService
+
+    // Making sure the previous subscription is unsubscribed
+    this.addProductToWishlistSubscription?.unsubscribe();
+
+    this.addProductToWishlistSubscription = this._wishListService
       .addProductToWishlist(this.productDetails.id)
       .subscribe({
         next: (response) => {
@@ -89,20 +99,22 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   private _getSpecificProduct(id: string) {
-    this._productService.getSpecificProduct(id).subscribe({
-      next: (response) => {
-        this.productDetails = response.data;
-        this._calcRatingStars();
-      },
-      error: (httpErrorResponse: HttpErrorResponse) => {
-        if (httpErrorResponse.status === 400) {
-          this._router.navigate(['/notfound']);
-        }
-      },
-    });
+    this.getProductByIdSubscription = this._productService
+      .getSpecificProduct(id)
+      .subscribe({
+        next: (response) => {
+          this.productDetails = response.data;
+          this._calcRatingStars();
+        },
+        error: (httpErrorResponse: HttpErrorResponse) => {
+          if (httpErrorResponse.status === 400) {
+            this._router.navigate(['/notfound']);
+          }
+        },
+      });
   }
   private _initProductDetails(): void {
-    this._getRouteParamSubscription = this._activatedRoute.paramMap.subscribe({
+    this.getRouteParamSubscription = this._activatedRoute.paramMap.subscribe({
       next: (params) => {
         const productId: string | null = params.get('id');
         if (productId !== null) this._getSpecificProduct(productId);
@@ -117,9 +129,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._getRouteParamSubscription?.unsubscribe();
-    this._getProductByIdSubscription?.unsubscribe();
-    this._addProductToCartSubscription?.unsubscribe();
-    this._addProductToWishlistSubscription?.unsubscribe();
+    this.getRouteParamSubscription?.unsubscribe();
+    this.getProductByIdSubscription?.unsubscribe();
+    this.addProductToCartSubscription?.unsubscribe();
+    this.addProductToWishlistSubscription?.unsubscribe();
   }
 }

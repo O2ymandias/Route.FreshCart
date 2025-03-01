@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import {
   FormBuilder,
@@ -6,9 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forget-password',
@@ -16,7 +16,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.scss',
 })
-export class ForgetPasswordComponent {
+export class ForgetPasswordComponent implements OnDestroy {
   // Services
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
@@ -24,8 +24,12 @@ export class ForgetPasswordComponent {
 
   // Properties
   isLoading: boolean = false;
-  serverErrorMsg: string = '';
   step: number = 1;
+
+  // Subscriptions
+  forgetPasswordSubscription: Subscription | null = null;
+  verifyResetCodeSubscription: Subscription | null = null;
+  resetPasswordSubscription: Subscription | null = null;
 
   // Forms
   emailForm: FormGroup = this._formBuilder.group({
@@ -48,19 +52,16 @@ export class ForgetPasswordComponent {
   sendEmailForm(): void {
     if (this.emailForm.valid) {
       this.isLoading = true;
-      this._authService.forgetPassword(this.emailForm.value.email).subscribe({
-        next: (response) => {
-          if (response.statusMsg === 'success') {
-            this.isLoading = false;
-            this.step = 2;
-            this.serverErrorMsg = '';
-          }
-        },
-        error: (httpErrorResponse: HttpErrorResponse) => {
-          this.isLoading = false;
-          this.serverErrorMsg = httpErrorResponse.error.message;
-        },
-      });
+      this.forgetPasswordSubscription = this._authService
+        .forgetPassword(this.emailForm.value.email)
+        .subscribe({
+          next: (response) => {
+            if (response.statusMsg === 'success') {
+              this.isLoading = false;
+              this.step = 2;
+            }
+          },
+        });
     } else {
       this.emailForm.markAllAsTouched();
     }
@@ -69,22 +70,20 @@ export class ForgetPasswordComponent {
   sendRestCodeForm(): void {
     if (this.resetCodeForm.valid) {
       this.isLoading = true;
-      this._authService
+      this.verifyResetCodeSubscription = this._authService
         .verifyResetCode(this.resetCodeForm.value.resetCode)
         .subscribe({
           next: (response) => {
             if (response.status === 'Success') {
               this.isLoading = false;
               this.step = 3;
-              this.serverErrorMsg = '';
               this.newPasswordForm
                 .get('email')
                 ?.patchValue(this.emailForm.get('email')?.value);
             }
           },
-          error: (httpErrorResponse: HttpErrorResponse) => {
+          error: () => {
             this.isLoading = false;
-            this.serverErrorMsg = httpErrorResponse.error.message;
           },
         });
     } else {
@@ -95,18 +94,25 @@ export class ForgetPasswordComponent {
   sendNewPasswordForm(): void {
     if (this.newPasswordForm.valid) {
       this.isLoading = true;
-      this._authService.resetPassword(this.newPasswordForm.value).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          if (response.token) this._router.navigate(['login']);
-        },
-        error: (httpErrorResponse: HttpErrorResponse) => {
-          this.isLoading = false;
-          this.serverErrorMsg = httpErrorResponse.error.message;
-        },
-      });
+      this.resetPasswordSubscription = this._authService
+        .resetPassword(this.newPasswordForm.value)
+        .subscribe({
+          next: (response) => {
+            this.isLoading = false;
+            if (response.token) this._router.navigate(['login']);
+          },
+          error: () => {
+            this.isLoading = false;
+          },
+        });
     } else {
       this.newPasswordForm.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.forgetPasswordSubscription?.unsubscribe();
+    this.verifyResetCodeSubscription?.unsubscribe();
+    this.resetPasswordSubscription?.unsubscribe();
   }
 }
