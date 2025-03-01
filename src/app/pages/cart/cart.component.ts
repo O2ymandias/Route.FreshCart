@@ -6,7 +6,6 @@ import {
   OnInit,
   QueryList,
   Renderer2,
-  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
@@ -19,7 +18,8 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CurrencyPipe } from '@angular/common';
-import { AppTranslationService } from '../../core/services/app-translation.service';
+import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -40,19 +40,24 @@ export class CartComponent implements OnInit {
   private readonly _cartService: CartService = inject(CartService);
   private readonly _renderer2: Renderer2 = inject(Renderer2);
   private readonly _wishlistService: WishlistService = inject(WishlistService);
-
   private readonly _confirmationService: ConfirmationService =
     inject(ConfirmationService);
-
   private readonly _translateService: TranslateService =
     inject(TranslateService);
+  private readonly _toastrService: ToastrService = inject(ToastrService);
 
   // Properties
   cartData: ICartData | null = null;
   @ViewChildren('updateQuantityBtn')
   updateQuantityBtns: QueryList<ElementRef<HTMLButtonElement>> | null = null;
-
   clearCartSpinner: boolean = false;
+
+  // Subscriptions
+  removeCartItemSubscription: Subscription | null = null;
+  updateQuantitySubscription: Subscription | null = null;
+  clearCartSubscription: Subscription | null = null;
+  cartDataSubscription: Subscription | null = null;
+  addToWishlistSubscription: Subscription | null = null;
 
   // Hooks
   ngOnInit(): void {
@@ -69,17 +74,26 @@ export class CartComponent implements OnInit {
       this._renderer2.setStyle(removeSpinner, 'display', 'inline-block');
     }
 
-    this._cartService.removeItem(itemId).subscribe((response) => {
-      if (removeSpinner) {
-        this._renderer2.setStyle(removeSpinner, 'display', 'none');
-      }
-      this._setCartData(response);
-      this._cartService.numberOfItems.set(response.numOfCartItems);
-    });
+    // Making sure the previous subscription is unsubscribed.
+    this.removeCartItemSubscription?.unsubscribe();
+
+    this.removeCartItemSubscription = this._cartService
+      .removeItem(itemId)
+      .subscribe((response) => {
+        if (removeSpinner) {
+          this._renderer2.setStyle(removeSpinner, 'display', 'none');
+        }
+        this._setCartData(response);
+        this._cartService.numberOfItems.set(response.numOfCartItems);
+      });
   }
   updateQuantity(productId: string, newQuantity: number) {
     this._disableUpdateBtns();
-    this._cartService
+
+    // Making sure the previous subscription is unsubscribed.
+    this.updateQuantitySubscription?.unsubscribe();
+
+    this.updateQuantitySubscription = this._cartService
       .updateProductQuantity(productId, newQuantity.toString())
       .subscribe((response) => {
         this._enableUpdateBtns();
@@ -119,31 +133,54 @@ export class CartComponent implements OnInit {
       },
       accept: () => {
         this.clearCartSpinner = true;
-        this._cartService.clearUserCart().subscribe({
-          next: (response) => {
-            if (response.message === 'success') {
-              this.cartData = null;
-              this.clearCartSpinner = false;
-              this._cartService.numberOfItems.set(0);
-            }
-          },
-        });
+
+        // Making sure the previous subscription is unsubscribed.
+        this.clearCartSubscription?.unsubscribe();
+
+        this.clearCartSubscription = this._cartService
+          .clearUserCart()
+          .subscribe({
+            next: (response) => {
+              if (response.message === 'success') {
+                this.cartData = null;
+                this.clearCartSpinner = false;
+                this._cartService.numberOfItems.set(0);
+              }
+            },
+          });
       },
     });
   }
   addToWishList(productId: string): void {
-    this._wishlistService.addProductToWishlist(productId).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-    });
+    // Making sure the previous subscription is unsubscribed.
+    this.addToWishlistSubscription?.unsubscribe();
+
+    this.addToWishlistSubscription = this._wishlistService
+      .addProductToWishlist(productId)
+      .subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            let message =
+              this._translateService.currentLang === 'en'
+                ? 'Product added to wishlist'
+                : 'تم إضافة المنتج إلى قائمة الرغبات';
+
+            this._toastrService.success(message, 'FreshCart');
+            this._wishlistService.numberOfItems.set(response.data.length);
+          }
+        },
+      });
   }
 
   private _getCartData(): void {
-    this._cartService.getLoggedUserCart().subscribe((response) => {
-      console.log(response);
-      this._setCartData(response);
-    });
+    // Making sure the previous subscription is unsubscribed.
+    this.cartDataSubscription?.unsubscribe();
+
+    this.cartDataSubscription = this._cartService
+      .getLoggedUserCart()
+      .subscribe((response) => {
+        this._setCartData(response);
+      });
   }
   private _disableUpdateBtns(): void {
     this.updateQuantityBtns?.forEach((btnRef) => {
@@ -162,5 +199,13 @@ export class CartComponent implements OnInit {
       products: response.data.products,
       totalCartPrice: response.data.totalCartPrice,
     };
+  }
+
+  ngOnDestroy(): void {
+    this.removeCartItemSubscription?.unsubscribe();
+    this.updateQuantitySubscription?.unsubscribe();
+    this.clearCartSubscription?.unsubscribe();
+    this.cartDataSubscription?.unsubscribe();
+    this.addToWishlistSubscription?.unsubscribe();
   }
 }
