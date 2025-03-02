@@ -10,7 +10,7 @@ import { Component, inject, OnDestroy, ViewChild } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -25,11 +25,10 @@ export class RegisterComponent implements OnDestroy {
   private readonly _router: Router = inject(Router);
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
   private readonly _toastrService: ToastrService = inject(ToastrService);
+  private readonly _translateService = inject(TranslateService);
 
   // Properties
-  @ViewChild('countdown')
   isLoading: boolean = false;
-  registerUserSubscription!: Subscription;
   registerForm: FormGroup = this._formBuilder.group(
     {
       name: [
@@ -56,11 +55,8 @@ export class RegisterComponent implements OnDestroy {
     { validators: [this.confirmPassword] },
   );
 
-  // Hooks
-
-  ngOnDestroy(): void {
-    this.registerUserSubscription?.unsubscribe();
-  }
+  // Subscriptions
+  registerUserSubscription: Subscription | null = null;
 
   // Methods
   register(): void {
@@ -72,15 +68,19 @@ export class RegisterComponent implements OnDestroy {
           next: (response) => {
             if (response.message === 'success') {
               this.isLoading = false;
-              this._toastrService.success(
-                'Registered successfully',
-                'FreshCart',
-              );
+              let message =
+                this._translateService.currentLang === 'en'
+                  ? 'Registered successfully'
+                  : 'تم التسجيل بنجاح';
+              this._toastrService.success(message, 'FreshCart');
 
               setTimeout(() => {
                 this._router.navigate(['login']);
               }, 500);
             }
+          },
+          error: () => {
+            this.isLoading = false;
           },
         });
     } else {
@@ -92,5 +92,9 @@ export class RegisterComponent implements OnDestroy {
       formGroup.get('rePassword')?.value
       ? null
       : { mismatch: true };
+  }
+
+  ngOnDestroy(): void {
+    this.registerUserSubscription?.unsubscribe();
   }
 }

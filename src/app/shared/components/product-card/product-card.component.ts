@@ -58,6 +58,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   // Methods
   addToCart(): void {
+    // Making sure the previous subscription is unsubscribed
+    this.addToCartSubscription?.unsubscribe();
+
     this.addToCartSubscription = this._cartService
       .addProductToCart(this.id())
       .subscribe({
@@ -75,6 +78,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   }
 
   addToWishlist(): void {
+    // Making sure the previous subscription is unsubscribed
+    this.addToWishlistSubscription?.unsubscribe();
+
     this.addToWishlistSubscription = this._wishlistService
       .addProductToWishlist(this.id())
       .subscribe({
@@ -93,12 +99,20 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   removeFromWishlist(): void {
     this.isRemoving = true;
+
+    // Making sure the previous subscription is unsubscribed
+    this.removeToWishlistSubscription?.unsubscribe();
+
     this.removeToWishlistSubscription = this._wishlistService
       .removeProductFromWishlist(this.id())
       .subscribe({
         next: (response) => {
           if (response.status === 'success') {
             this._wishlistService.numberOfItems.set(response.data.length);
+
+            // Making sure the previous subscription is unsubscribed
+            this.getLoggedUserWishlistSubscription?.unsubscribe();
+
             this.getLoggedUserWishlistSubscription = this._wishlistService
               .getLoggedUserWishlist()
               .subscribe({

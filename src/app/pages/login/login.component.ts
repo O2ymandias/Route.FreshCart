@@ -11,7 +11,6 @@ import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 
-
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
@@ -24,19 +23,14 @@ export class LoginComponent implements OnDestroy {
   private readonly _router: Router = inject(Router);
 
   // Properties
-  loginUserSubscription!: Subscription;
-  isLoggedInSuccessfully: boolean = false;
-  serverErrorMsg: string = '';
   isLoading: boolean = false;
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required]),
   });
 
-  // Hooks
-  ngOnDestroy(): void {
-    this.loginUserSubscription?.unsubscribe();
-  }
+  // Subscriptions
+  loginUserSubscription: Subscription | null = null;
 
   // Methods
   login(): void {
@@ -49,30 +43,28 @@ export class LoginComponent implements OnDestroy {
             if (response.message === 'success') {
               // Handle UI
               this.isLoading = false;
-              this.isLoggedInSuccessfully = true;
 
               // Authenticate User
               localStorage.setItem('userToken', response.token);
               this._authService.isLoggedIn.next(true);
               const userData = this._authService.decodeToken(response.token);
               if (userData !== null) {
-                console.log(userData.name);
                 this._authService.userName.next(userData.name);
               }
 
               this._router.navigate(['/home']);
             }
           },
-          error: (httpErrorResponse: HttpErrorResponse) => {
+          error: () => {
             this.isLoading = false;
-            this.serverErrorMsg =
-              httpErrorResponse.status === 401
-                ? httpErrorResponse.error.message
-                : 'Pleas enter valid data.';
           },
         });
     } else {
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.loginUserSubscription?.unsubscribe();
   }
 }

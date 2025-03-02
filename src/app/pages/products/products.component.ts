@@ -23,7 +23,7 @@ import { BrandsService } from '../../core/services/brands.service';
 import { IBrand } from '../../shared/interfaces/ibrand';
 import { IProductsFiltrationOptions } from '../../shared/interfaces/iproducts-filtration-options';
 import { DrawerModule } from 'primeng/drawer';
-import { PaginationComponent } from "../../shared/components/pagination/pagination.component";
+import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -34,8 +34,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     ReactiveFormsModule,
     DrawerModule,
     PaginationComponent,
-    TranslatePipe
-],
+    TranslatePipe,
+  ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -59,9 +59,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._initFormFiltration();
   }
 
+  // Properties
   pageIndex: number = 1;
   pageSize: number = 10;
-
   displayProducts: IProduct[] = [];
   allProducts: IProduct[] = [];
   allCategories: ICategory[] = [];
@@ -78,6 +78,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   getAllCategoriesSubscription: Subscription | null = null;
   getAllBrandsSubscription: Subscription | null = null;
 
+  // Hooks
   ngOnInit(): void {
     this._initAllProducts();
     this._initProducts({
@@ -88,6 +89,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._initBrands();
   }
 
+  // Methods
   moveToPage(pageNumber: number): void {
     if (pageNumber < 1) {
       this.pageIndex = 1;
@@ -117,6 +119,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   private _initProducts(options?: IProductsFiltrationOptions): void {
     this._updatePageIndexOnLocalStorage();
+
+    // Making sure the previous subscription is unsubscribed.
+    this.getDisplayedProductsSubscription?.unsubscribe();
+
     this.getDisplayedProductsSubscription = this._productsServices
       .getAllProducts(options)
       .subscribe({

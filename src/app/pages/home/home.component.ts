@@ -19,7 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     GalleriaModule,
     SlicePipe,
     FormsModule,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -31,8 +31,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     inject(CategoriesService);
 
   // Subscriptions
-  private _getProductsSubscription!: Subscription;
-  private _getCategoriesSubscription!: Subscription;
+  getProductsSubscription: Subscription | null = null;
+  getCategoriesSubscription: Subscription | null = null;
 
   // Properties
   mainCarouselImages = [
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Methods
   private _getProducts(): void {
-    this._getProductsSubscription = this._productsService
+    this.getProductsSubscription = this._productsService
       .getAllProducts()
       .subscribe({
         next: (response) => {
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
   private _getCategories(): void {
-    this._getCategoriesSubscription = this._categoriesService
+    this.getCategoriesSubscription = this._categoriesService
       .getAllCategories()
       .subscribe({
         next: (response) => {
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._getProductsSubscription?.unsubscribe();
-    this._getCategoriesSubscription?.unsubscribe();
+    this.getProductsSubscription?.unsubscribe();
+    this.getCategoriesSubscription?.unsubscribe();
   }
 }
