@@ -56,6 +56,7 @@ export const routes: Routes = [
       ),
     title: 'details',
     canActivate: [mainGuard],
+    data: { prerender: false },
   },
   {
     path: 'checkout/:cartId',
@@ -65,6 +66,7 @@ export const routes: Routes = [
       ),
     title: 'checkout',
     canActivate: [mainGuard],
+    data: { prerender: false },
   },
   {
     path: 'allorders',
