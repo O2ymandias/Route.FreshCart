@@ -5,7 +5,6 @@ import { finalize } from 'rxjs';
 
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   const ngxSpinnerService: NgxSpinnerService = inject(NgxSpinnerService);
-  console.log(req.url);
   if (
     (req.url.includes('api/v1/cart') &&
       (req.method === 'POST' ||

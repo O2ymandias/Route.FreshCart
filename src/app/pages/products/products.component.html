@@ -101,14 +101,17 @@
   ></app-pagination>
 
   <!-- Filter -->
-  <p-drawer [(visible)]="drawerVisible" header="Apply Filters">
+  <p-drawer
+    [(visible)]="drawerVisible"
+    header="{{ 'products.drawer.applyFilters' | translate }}"
+  >
     <form [formGroup]="filtrationForm" (ngSubmit)="filter()">
       <div class="flex flex-1 flex-col justify-between">
         <div class="space-y-6">
           <!-- Categories -->
           <div class="space-y-2">
             <h6 class="text-base font-medium text-black dark:text-white">
-              Categories
+              {{ "products.drawer.categories" | translate }}
             </h6>
             <div formArrayName="categories">
               @for (
@@ -137,14 +140,16 @@
           <!-- Brands -->
           <div class="space-y-2">
             <h6 class="text-base font-medium text-black dark:text-white">
-              Brands
+              {{ "products.drawer.brands" | translate }}
             </h6>
 
             <select
               formControlName="brand"
               class="block w-full rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-sm text-slate-900 focus:border-green-500 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:focus:border-green-500 dark:focus:ring-green-500"
             >
-              <option selected [value]="''">Select Brand</option>
+              <option selected [value]="''">
+                {{ "products.drawer.selectBrand" | translate }}
+              </option>
               @for (brand of allBrands; track brand._id) {
                 <option [value]="brand._id">{{ brand.name }}</option>
               }
@@ -154,14 +159,16 @@
           <!-- Prices -->
           <div class="space-y-2">
             <h6 class="text-base font-medium text-black dark:text-white">
-              Prices
+              {{ "products.drawer.prices.title" | translate }}
             </h6>
-            <div class="col-span-2 flex items-center justify-between space-x-3">
+            <div
+              class="col-span-2 flex items-center justify-between space-x-3 rtl:space-x-reverse"
+            >
               <div class="w-full">
                 <label
                   class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  From
+                  {{ "products.drawer.prices.from" | translate }}
                 </label>
 
                 <input
@@ -175,7 +182,7 @@
                 <label
                   class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  To
+                  {{ "products.drawer.prices.to" | translate }}
                 </label>
 
                 <input
@@ -188,12 +195,14 @@
           </div>
         </div>
 
-        <div class="mt-6 flex w-full justify-center space-x-4 pb-4 md:px-4">
+        <div
+          class="mt-6 flex w-full justify-center space-x-4 pb-4 md:px-4 rtl:space-x-reverse"
+        >
           <button
             type="submit"
             class="mb-2 me-2 rounded-lg border border-green-700 px-5 py-2.5 text-center text-sm font-medium text-green-700 hover:bg-green-800 hover:text-white dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white"
           >
-            Filter
+            {{ "products.drawer.buttons.filter" | translate }}
           </button>
 
           <button
@@ -201,7 +210,7 @@
             type="button"
             class="mb-2 me-2 rounded-lg border border-red-700 px-5 py-2.5 text-center text-sm font-medium text-red-700 hover:bg-red-800 hover:text-white dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white"
           >
-            clear
+            {{ "products.drawer.buttons.clear" | translate }}
           </button>
         </div>
       </div>

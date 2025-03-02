@@ -4,7 +4,8 @@
       <h2
         class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl"
       >
-        My orders <i class="fa-solid fa-basket-shopping ms-2"></i>
+        {{ "orders.title" | translate }}
+        <i class="fa-solid fa-basket-shopping ms-2"></i>
       </h2>
 
       <div class="flow-root">
@@ -16,7 +17,7 @@
                 <dt
                   class="text-base font-medium text-gray-500 dark:text-gray-400"
                 >
-                  Order ID:
+                  {{ "orders.columns.orderID" | translate }}:
                 </dt>
                 <dd
                   class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white"
@@ -30,7 +31,7 @@
                 <dt
                   class="text-base font-medium text-gray-500 dark:text-gray-400"
                 >
-                  Date:
+                  {{ "orders.columns.date" | translate }}:
                 </dt>
                 <dd
                   class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white"
@@ -44,7 +45,7 @@
                 <dt
                   class="text-base font-medium text-gray-500 dark:text-gray-400"
                 >
-                  Price:
+                  {{ "orders.columns.price" | translate }}:
                 </dt>
                 <dd
                   class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white"
@@ -58,7 +59,7 @@
                 <dt
                   class="text-base font-medium text-gray-500 dark:text-gray-400"
                 >
-                  Payment:
+                  {{ "orders.columns.payment" | translate }}:
                 </dt>
                 <dd
                   class="me-2 mt-1.5 inline-flex rounded py-0.5 text-xs font-medium"
@@ -67,13 +68,14 @@
                     <span
                       class="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
                     >
-                      Paid
+                      {{ "orders.details.status.paid" | translate }}
                     </span>
                   } @else {
                     <span
                       class="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                      >Pending</span
                     >
+                      {{ "orders.details.status.notPaid" | translate }}
+                    </span>
                   }
                 </dd>
               </dl>
@@ -83,7 +85,7 @@
                 <dt
                   class="text-base font-medium text-gray-500 dark:text-gray-400"
                 >
-                  Delivery:
+                  {{ "orders.columns.delivery" | translate }}:
                 </dt>
                 <dd
                   class="me-2 mt-1.5 inline-flex rounded py-0.5 text-xs font-medium"
@@ -92,13 +94,14 @@
                     <span
                       class="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
                     >
-                      Delivered
+                      {{ "orders.details.status.delivered" | translate }}
                     </span>
                   } @else {
                     <span
                       class="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                      >Not delivered yet</span
                     >
+                      {{ "orders.details.status.notDelivered" | translate }}
+                    </span>
                   }
                 </dd>
               </dl>
@@ -109,7 +112,7 @@
                   (click)="showOrderDetailsDialog(order)"
                   role="button"
                   class="inline-flex w-full justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-green-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto"
-                  >View details</a
+                  >{{ "orders.viewDetails" | translate }}</a
                 >
               </div>
             </div>
@@ -120,7 +123,7 @@
   </div>
 
   <p-dialog
-    header="Order Details"
+    header=" {{ 'orders.details.title' | translate }} "
     [(visible)]="showOrderDetails"
     [modal]="true"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
@@ -135,66 +138,70 @@
       >
         <!-- Total Price -->
         <li>
-          <span class="font-semibold text-black dark:text-white"
-            >Total Price:
+          <span class="font-semibold text-black dark:text-white">
+            {{ "orders.details.totalPrice" | translate }}:
           </span>
           {{ currentOrder?.totalOrderPrice | currency: "GBP" }}
         </li>
         <!-- Shipping Price -->
         <li>
           <span class="font-semibold text-black dark:text-white"
-            >Shipping Price:
+            >{{ "orders.details.shippingPrice" | translate }}:
           </span>
           {{ currentOrder?.shippingPrice | currency: "GBP" }}
         </li>
         <!-- Tax Price -->
         <li>
-          <span class="font-semibold text-black dark:text-white">Tax: </span>
+          <span class="font-semibold text-black dark:text-white"
+            >{{ "orders.details.tax" | translate }}:
+          </span>
           {{ currentOrder?.taxPrice | currency: "GBP" }}
         </li>
         <!-- Shipping Address -->
         <li>
           <span class="font-semibold text-black dark:text-white"
-            >Shipping Address:
+            >{{ "orders.details.shippingAddress" | translate }}:
           </span>
           {{ currentOrder?.shippingAddress?.city }}
         </li>
         <!-- Telephone Number -->
         <li>
           <span class="font-semibold text-black dark:text-white"
-            >Telephone Number:
+            >{{ "orders.details.telephoneNumber" | translate }}:
           </span>
           {{ currentOrder?.shippingAddress?.phone }}
         </li>
         <!-- Status -->
         <li>
-          <span class="font-semibold text-black dark:text-white"
-            >Status:
+          <span class="font-semibold text-black dark:text-white">
+            {{ "orders.details.status.title" | translate }}:
 
             <span class="space-x-2">
               @if (currentOrder?.isPaid) {
                 <span
                   class="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
                 >
-                  Paid
+                  {{ "orders.details.status.paid" | translate }}
                 </span>
               } @else {
                 <span
                   class="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                  >Not paid yet</span
                 >
+                  {{ "orders.details.status.notPaid" | translate }}
+                </span>
               }
               @if (currentOrder?.isDelivered) {
                 <span
                   class="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
                 >
-                  Delivered
+                  {{ "orders.details.status.delivered" | translate }}
                 </span>
               } @else {
                 <span
                   class="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                  >Not delivered yet</span
                 >
+                  {{ "orders.details.status.notDelivered" | translate }}
+                </span>
               }
             </span>
           </span>
@@ -202,21 +209,21 @@
         <!-- Order Date -->
         <li>
           <span class="font-semibold text-black dark:text-white"
-            >Order Date:
+            >{{ "orders.details.orderDate" | translate }}:
           </span>
           {{ currentOrder?.createdAt | date }}
         </li>
         <!-- Order ID -->
         <li>
           <span class="font-semibold text-black dark:text-white"
-            >Order ID:
+            >{{ "orders.details.orderID" | translate }}:
           </span>
           {{ currentOrder?.id }}
         </li>
         <!-- Payment Method -->
         <li>
           <span class="font-semibold text-black dark:text-white"
-            >Payment Method:
+            >{{ "orders.details.paymentMethod" | translate }}:
           </span>
           {{ currentOrder?.paymentMethodType }}
         </li>
@@ -255,7 +262,7 @@
 
             <div class="text-end md:order-4 md:w-32">
               <p class="text-base font-bold text-gray-900 dark:text-white">
-                {{ item.count * item.price }} LE
+                {{ item.count * item.price | currency: "GBP" }}
               </p>
             </div>
           </div>

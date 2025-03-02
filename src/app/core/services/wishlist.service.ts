@@ -50,7 +50,6 @@ export class WishlistService {
   getNumberOfItems(): void {
     this.getLoggedUserWishlist().subscribe((response) => {
       this.numberOfItems.set(response.data.length);
-      console.log(this.numberOfItems());
     });
   }
 }

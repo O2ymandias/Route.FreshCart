@@ -48,7 +48,22 @@
       "lowestToHighest": "Lowest to highest",
       "highestToLowest": "Highest to lowest"
     },
-    "noProductsFound": "No products found"
+    "noProductsFound": "No products found",
+    "drawer": {
+      "applyFilters": "Apply Filters",
+      "categories": "Categories",
+      "brands": "Brands",
+      "selectBrand": "Select Brand",
+      "prices": {
+        "title": "Prices",
+        "to": "To",
+        "from": "From"
+      },
+      "buttons": {
+        "clear": "Clear",
+        "filter": "Filter"
+      }
+    }
   },
   "pagination": {
     "previous": "Previous",
@@ -179,5 +194,40 @@
     "validation": {
       "cityRequired": "Please enter your city."
     }
+  },
+  "orders": {
+    "title": "My Orders",
+    "columns": {
+      "orderID": "Order ID",
+      "date": "Date",
+      "price": "Price",
+      "payment": "Payment",
+      "delivery": "Delivery"
+    },
+    "viewDetails": "View details",
+    "details": {
+      "title": "Order Details",
+      "totalPrice": "Total Price",
+      "shippingPrice": "Shipping Price",
+      "tax": "Tax",
+      "shippingAddress": "Shipping Address",
+      "telephoneNumber": "Telephone Number",
+      "status": {
+        "title": "Status",
+        "paid": "Paid",
+        "delivered": "Delivered",
+        "notPaid": "Not paid yet",
+        "notDelivered": "Not delivered yet"
+      },
+      "orderDate": "Order Date",
+      "orderID": "Order ID",
+      "paymentMethod": "Payment Method"
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Something's missing",
+    "description": "Sorry, we can't find that page. You'll find lots to explore on the homepage.",
+    "button": "Back to Homepage"
   }
 }

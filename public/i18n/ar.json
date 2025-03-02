@@ -48,7 +48,22 @@
       "lowestToHighest": "من الأقل إلى الأعلى",
       "highestToLowest": "من الأعلى إلى الأقل"
     },
-    "noProductsFound": "لم يتم العثور على منتجات"
+    "noProductsFound": "لم يتم العثور على منتجات",
+    "drawer": {
+      "applyFilters": "تطبيق الفلاتر",
+      "categories": "الفئات",
+      "brands": "العلامات التجارية",
+      "selectBrand": "اختر العلامة التجارية",
+      "prices": {
+        "title": "السعر",
+        "to": "إلى",
+        "from": "من"
+      },
+      "buttons": {
+        "clear": "مسح",
+        "filter": "تصفية"
+      }
+    }
   },
   "pagination": {
     "previous": "السابق",
@@ -180,5 +195,42 @@
     "validation": {
       "cityRequired": "يرجى ادخال المدينة."
     }
+  },
+  "orders": {
+    "title": "طلباتي",
+    "columns": {
+      "orderID": "معرف الطلب",
+      "date": "التاريخ",
+      "price": "السعر",
+      "payment": "الدفع",
+      "delivery": "التوصيل"
+    },
+    "viewDetails": "عرض التفاصيل",
+    "details": {
+      "title": "تفاصيل الطلب",
+      "totalPrice": "السعر الإجمالي",
+      "shippingPrice": "سعر الشحن",
+      "tax": "الضريبة",
+      "shippingAddress": "عنوان الشحن",
+      "telephoneNumber": "رقم الهاتف",
+      "status": {
+        "title": "حالة الطلب",
+        "paid": "تم الدفع",
+        "delivered": "تم التوصيل",
+        "notPaid": "لم يتم الدفع بعد",
+        "notDelivered": "لم يتم التوصيل بعد"
+      },
+      "notPaid": "لم يتم الدفع بعد",
+      "notDelivered": "لم يتم التوصيل بعد",
+      "orderDate": "تاريخ الطلب",
+      "orderID": "معرف الطلب",
+      "paymentMethod": "طريقة الدفع"
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "هناك شيء مفقود",
+    "description": "عذرًا، لا يمكننا العثور على هذه الصفحة. ستجد الكثير لاستكشافه على الصفحة الرئيسية.",
+    "button": "العودة إلى الصفحة الرئيسية"
   }
 }

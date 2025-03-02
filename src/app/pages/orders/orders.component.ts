@@ -4,13 +4,13 @@ import { IOrder } from '../../shared/interfaces/iorder';
 import { AuthService } from '../../core/services/auth.service';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Dialog } from 'primeng/dialog';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-orders',
-  imports: [DatePipe, CurrencyPipe, Dialog, RouterLink],
+  imports: [DatePipe, CurrencyPipe, Dialog, RouterLink, TranslatePipe],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
 })
@@ -24,13 +24,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
   showOrderDetails: boolean = false;
   currentOrder: IOrder | null = null;
 
-  // Hooks
+  // Subscriptions
   getUserOrdersSubscription: Subscription | null = null;
 
+  // Hooks
   ngOnInit(): void {
     this._initOrders();
   }
 
+  // Methods
   showOrderDetailsDialog(order: IOrder) {
     this.showOrderDetails = true;
     this.currentOrder = order;
