@@ -63,7 +63,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           .subscribe({
             next: (response) => {
               if (response.status === 'success') {
-                window.open(response.session.url, '_self');
+                window.open(response.session.url, '_blank');
                 this._router.navigate(['/allorders']);
                 this._cartService.numberOfItems.set(0);
               }
