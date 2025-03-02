@@ -11,7 +11,7 @@ export class OrdersService {
   constructor(private readonly _httpClient: HttpClient) {}
 
   domain: string = 'http://localhost:4200';
-  vercelDomain: string = 'https://route-fresh-cart.vercel.app/#/';
+  vercelDomain: string = 'https://route-fresh-cart.vercel.app';
 
   payWithCredit(
     cartId: string,
