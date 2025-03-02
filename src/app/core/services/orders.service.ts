@@ -1,9 +1,8 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IShippingAddress } from '../../shared/interfaces/ishipping-address';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +10,16 @@ import { isPlatformBrowser } from '@angular/common';
 export class OrdersService {
   constructor(private readonly _httpClient: HttpClient) {}
 
+  domain: string = 'http://localhost:4200';
+  vercelDomain: string =
+    'https://route-fresh-cart-8ax4pv7zj-o2ymandias-projects.vercel.app';
+
   payWithCredit(
     cartId: string,
     shippingAddress: IShippingAddress,
   ): Observable<any> {
     return this._httpClient.post(
-      `${environment.baseUrl}/api/v1/orders/checkout-session/${cartId}?url=http://localhost:4200`,
+      `${environment.baseUrl}/api/v1/orders/checkout-session/${cartId}?url=${this.vercelDomain}`,
       {
         shippingAddress,
       },
